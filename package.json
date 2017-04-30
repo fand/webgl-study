@@ -1,0 +1,18 @@
+{
+  "name": "webgl-study",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'TBD'"
+  },
+  "keywords": [],
+  "author": "fand <fand@gmork.in>",
+  "license": "MIT",
+  "devDependencies": {
+    "glslify-loader": "^1.0.2",
+    "raw-loader": "^0.5.1",
+    "webpack": "^2.4.1"
+  },
+  "dependencies": {}
+}
