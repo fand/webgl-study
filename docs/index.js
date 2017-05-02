@@ -30,7 +30,7 @@ class Shader {
     // Initialise WebGL
     // let gl;
     try {
-      this.gl = canvas.getContext('experimental-webgl', { preserveDrawingBuffer: true });
+      this.gl = this.canvas.getContext('experimental-webgl', { preserveDrawingBuffer: true });
     } catch (e) {}
 
     if (!this.gl) {
@@ -66,11 +66,11 @@ class Shader {
     };
 
     const noContextMenu = e => e.preventDefault();
-    canvas.addEventListener('mousedown', surfaceMouseDown, false);
-    canvas.addEventListener('contextmenu', noContextMenu, false);
+    this.canvas.addEventListener('mousedown', surfaceMouseDown, false);
+    this.canvas.addEventListener('contextmenu', noContextMenu, false);
 
     let clientXLast, clientYLast;
-    canvas.addEventListener('mousemove', (e) => {
+    this.canvas.addEventListener('mousemove', (e) => {
       const clientX = e.clientX;
       const clientY = e.clientY;
 
@@ -80,8 +80,8 @@ class Shader {
 
       clientXLast = clientX;
       clientYLast = clientY;
-      this.parameters.mouseX = clientX / canvas.width;
-      this.parameters.mouseY = 1 - clientY / canvas.height;
+      this.parameters.mouseX = clientX / this.canvas.width;
+      this.parameters.mouseY = 1 - clientY / this.canvas.height;
     }, false);
 
     this.onWindowResize();
@@ -181,7 +181,7 @@ class Shader {
     this.gl.deleteShader(vs);
     this.gl.deleteShader(fs);
 
-    this.gl.linkProgram( program );
+    this.gl.linkProgram(program);
 
     if (!this.gl.getProgramParameter(program, this.gl.LINK_STATUS)) {
       const error = this.gl.getProgramInfoLog(program);
@@ -209,7 +209,7 @@ class Shader {
     program.uniformsCache[label] = this.gl.getUniformLocation(program, label);
   }
 
-  createTarget( width, height ) {
+  createTarget (width, height) {
 
     var target = {};
 
@@ -218,31 +218,28 @@ class Shader {
     target.texture = this.gl.createTexture();
 
     // set up framebuffer
+    this.gl.bindTexture(this.gl.TEXTURE_2D, target.texture);
+    this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, width, height, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
 
-    this.gl.bindTexture( this.gl.TEXTURE_2D, target.texture );
-    this.gl.texImage2D( this.gl.TEXTURE_2D, 0, this.gl.RGBA, width, height, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null );
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
 
-    this.gl.texParameteri( this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE );
-    this.gl.texParameteri( this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE );
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
 
-    this.gl.texParameteri( this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST );
-    this.gl.texParameteri( this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST );
-
-    this.gl.bindFramebuffer( this.gl.FRAMEBUFFER, target.framebuffer );
-    this.gl.framebufferTexture2D( this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, target.texture, 0 );
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, target.framebuffer);
+    this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, target.texture, 0);
 
     // set up renderbuffer
+    this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, target.renderbuffer);
 
-    this.gl.bindRenderbuffer( this.gl.RENDERBUFFER, target.renderbuffer );
-
-    this.gl.renderbufferStorage( this.gl.RENDERBUFFER, this.gl.DEPTH_COMPONENT16, width, height );
-    this.gl.framebufferRenderbuffer( this.gl.FRAMEBUFFER, this.gl.DEPTH_ATTACHMENT, this.gl.RENDERBUFFER, target.renderbuffer );
+    this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.DEPTH_COMPONENT16, width, height);
+    this.gl.framebufferRenderbuffer(this.gl.FRAMEBUFFER, this.gl.DEPTH_ATTACHMENT, this.gl.RENDERBUFFER, target.renderbuffer);
 
     // clean up
-
-    this.gl.bindTexture( this.gl.TEXTURE_2D, null );
-    this.gl.bindRenderbuffer( this.gl.RENDERBUFFER, null );
-    this.gl.bindFramebuffer( this.gl.FRAMEBUFFER, null);
+    this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+    this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, null);
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
 
     return target;
 
@@ -297,19 +294,19 @@ class Shader {
     return shader;
   }
 
-  onWindowResize( event ) {
+  onWindowResize (event) {
     // TODO: resize on fullscreen mode
-    // canvas.width = window.innerWidth / quality;
-    // canvas.height = window.innerHeight / quality;
-    // canvas.style.width = window.innerWidth + 'px';
-    // canvas.style.height = window.innerHeight + 'px';
+    // this.canvas.width = window.innerWidth / quality;
+    // this.canvas.height = window.innerHeight / quality;
+    // this.canvas.style.width = window.innerWidth + 'px';
+    // this.canvas.style.height = window.innerHeight + 'px';
 
     this.parameters.screenWidth = this.canvas.width;
     this.parameters.screenHeight = this.canvas.height;
 
     this.computeSurfaceCorners();
 
-    this.gl.viewport( 0, 0, this.canvas.width, this.canvas.height );
+    this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     this.createRenderTargets();
   }
 
@@ -369,5 +366,20 @@ class Shader {
     const tmp = this.frontTarget;
     this.frontTarget = this.backTarget;
     this.backTarget = tmp;
+  }
+
+  getImg (width, height) {
+    this.canvas.width = width;
+    this.canvas.height = height;
+    this.parameters.screenWidth = width;
+    this.parameters.screenHeight = height;
+
+    this.gl.viewport(0, 0, width, height);
+    this.createRenderTargets();
+    this.resetSurface();
+    this.render();
+    const img = this.canvas.toDataURL('image/png');
+    this.onWindowResize();
+    return img;
   }
 }
