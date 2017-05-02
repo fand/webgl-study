@@ -7,14 +7,7 @@ class Shader {
     this.canvas = canvas;
     this.code = code;
 
-    this.parameters = {
-      startTime: Date.now(),
-      time: 0,
-      mouseX: 0.5,
-      mouseY: 0.5,
-      screenWidth: 0,
-      screenHeight: 0,
-    };
+    this.params = new Params();
 
     this.surface = {
       centerX: 0,
@@ -69,19 +62,11 @@ class Shader {
     this.canvas.addEventListener('mousedown', surfaceMouseDown, false);
     this.canvas.addEventListener('contextmenu', noContextMenu, false);
 
-    let clientXLast, clientYLast;
     this.canvas.addEventListener('mousemove', (e) => {
-      const clientX = e.clientX;
-      const clientY = e.clientY;
-
-      if (clientXLast === clientX && clientYLast === clientY) {
-        return;
-      }
-
-      clientXLast = clientX;
-      clientYLast = clientY;
-      this.parameters.mouseX = clientX / this.canvas.width;
-      this.parameters.mouseY = 1 - clientY / this.canvas.height;
+      this.params.updateMouse(
+        e.clientX / this.canvas.width,
+        e.clientY / this.canvas.height
+      )
     }, false);
 
     this.onWindowResize();
@@ -94,7 +79,7 @@ class Shader {
   }
 
   computeSurfaceCorners () {
-    this.surface.width = this.surface.height * this.parameters.screenWidth / this.parameters.screenHeight;
+    this.surface.width = this.surface.height * this.params.aspectRatio;
 
     var halfWidth = this.surface.width * 0.5, halfHeight = this.surface.height * 0.5;
 
@@ -210,7 +195,6 @@ class Shader {
   }
 
   createTarget (width, height) {
-
     var target = {};
 
     target.framebuffer = this.gl.createFramebuffer();
@@ -242,28 +226,27 @@ class Shader {
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
 
     return target;
-
   }
 
   createRenderTargets() {
-    this.frontTarget = this.createTarget(this.parameters.screenWidth, this.parameters.screenHeight);
-    this.backTarget = this.createTarget(this.parameters.screenWidth, this.parameters.screenHeight);
+    this.frontTarget = this.createTarget(this.params.screenWidth, this.params.screenHeight);
+    this.backTarget = this.createTarget(this.params.screenWidth, this.params.screenHeight);
   }
 
   createShader (src, type) {
-    var shader = this.gl.createShader( type );
+    var shader = this.gl.createShader(type);
     var line, lineNum, lineError, indexEnd;
 
     while (errorLines.length > 0) {
       line = errorLines.pop();
     }
 
-    this.gl.shaderSource( shader, src );
-    this.gl.compileShader( shader );
+    this.gl.shaderSource(shader, src);
+    this.gl.compileShader(shader);
 
-    if ( !this.gl.getShaderParameter( shader, this.gl.COMPILE_STATUS ) ) {
+    if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
 
-      var error = this.gl.getShaderInfoLog( shader );
+      var error = this.gl.getShaderInfoLog(shader);
 
       // Remove trailing linefeed, for FireFox's benefit.
       while ((error.length > 1) && (error.charCodeAt(error.length - 1) < 32)) {
@@ -301,8 +284,7 @@ class Shader {
     // this.canvas.style.width = window.innerWidth + 'px';
     // this.canvas.style.height = window.innerHeight + 'px';
 
-    this.parameters.screenWidth = this.canvas.width;
-    this.parameters.screenHeight = this.canvas.height;
+    this.params.resize(this.canvas.width, this.canvas.height);
 
     this.computeSurfaceCorners();
 
@@ -318,14 +300,14 @@ class Shader {
   render () {
     if (!this.currentProgram) { return; }
 
-    this.parameters.time = Date.now() - this.parameters.startTime;
+    this.params.tick();
 
     // Set uniforms for custom shader
     this.gl.useProgram(this.currentProgram);
 
-    this.gl.uniform1f(this.currentProgram.uniformsCache['time'], this.parameters.time / 1000);
-    this.gl.uniform2f(this.currentProgram.uniformsCache['mouse'], this.parameters.mouseX, this.parameters.mouseY);
-    this.gl.uniform2f(this.currentProgram.uniformsCache['resolution'], this.parameters.screenWidth, this.parameters.screenHeight);
+    this.gl.uniform1f(this.currentProgram.uniformsCache['time'], this.params.seconds);
+    this.gl.uniform2f(this.currentProgram.uniformsCache['mouse'], this.params.mouseX, this.params.mouseY);
+    this.gl.uniform2f(this.currentProgram.uniformsCache['resolution'], this.params.screenWidth, this.params.screenHeight);
     this.gl.uniform1i(this.currentProgram.uniformsCache['backbuffer'], 0);
     this.gl.uniform2f(this.currentProgram.uniformsCache['surfaceSize'], this.surface.width, this.surface.height);
 
@@ -347,7 +329,7 @@ class Shader {
     // Set uniforms for screen shader
     this.gl.useProgram(this.screenProgram);
 
-    this.gl.uniform2f(this.screenProgram.uniformsCache['resolution'], this.parameters.screenWidth, this.parameters.screenHeight);
+    this.gl.uniform2f(this.screenProgram.uniformsCache['resolution'], this.params.screenWidth, this.params.screenHeight);
     this.gl.uniform1i(this.screenProgram.uniformsCache['texture'], 1);
 
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer);
@@ -371,8 +353,7 @@ class Shader {
   getImg (width, height) {
     this.canvas.width = width;
     this.canvas.height = height;
-    this.parameters.screenWidth = width;
-    this.parameters.screenHeight = height;
+    this.params.resize(width, height);
 
     this.gl.viewport(0, 0, width, height);
     this.createRenderTargets();
