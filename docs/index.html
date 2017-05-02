@@ -17,6 +17,17 @@
       <canvas id="canvas0" class="canvas"/>
     </div>
   </div>
+  <div class="wrapper">
+    <div class="left">
+      <h2>1. Circle</h2>
+      <p>
+        distance functionを覚えた。
+      </p>
+    </div>
+    <div class="right">
+      <canvas id="canvas1" class="canvas"/>
+    </div>
+  </div>
   <script id="fragmentShader" type="x-shader/x-fragment">
   #ifdef GL_ES
   precision mediump float;
@@ -62,6 +73,27 @@
 
       gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
 
+  }
+  </script>
+
+  <script id="shader1" type="x-shader/x-fragment">
+  #ifdef GL_ES
+  precision mediump float;
+  #endif
+
+  #extension GL_OES_standard_derivatives : enable
+
+  uniform float time;
+  uniform vec2 mouse;
+  uniform vec2 resolution;
+
+  void main( void ) {
+      vec2 position = (gl_FragCoord.xy / resolution.xy);
+      vec2 center = vec2(0.5, 0.5);
+      vec2 d = position - center;
+      float diff = sqrt(d.x * d.x + d.y * d.y);
+
+      gl_FragColor = vec4(diff, diff, diff, 1.0);
   }
   </script>
 

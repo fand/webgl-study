@@ -185,7 +185,6 @@ export default class Shader {
         this.gl.compileShader(shader);
 
         if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-
             var error = this.gl.getShaderInfoLog(shader);
 
             // Remove trailing linefeed, for FireFox's benefit.
