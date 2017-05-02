@@ -7,19 +7,6 @@ class Shader {
     this.canvas = canvas;
     this.code = code;
 
-    this.params = new Params();
-
-    this.surface = {
-      centerX: 0,
-      centerY: 0,
-      width: 1,
-      height: 1,
-      isPanning: false,
-      isZooming: false,
-      lastX: 0,
-      lastY: 0,
-    };
-
     // Initialise WebGL
     // let gl;
     try {
@@ -30,6 +17,9 @@ class Shader {
       alert("WebGL not supported");
       return;
     }
+
+    this.params = new Params();
+    this.surface = new Surface(this.gl);
 
     // enable dFdx, dFdy, fwidth
     this.gl.getExtension('OES_standard_derivatives');
@@ -46,12 +36,9 @@ class Shader {
       - 1.0, 1.0
     ]), this.gl.STATIC_DRAW);
 
-    // Create surface buffer (coordinates at screen corners)
-    this.surface.buffer = this.gl.createBuffer();
-
     const surfaceMouseDown = (e) => {
       if (e.shiftKey) {
-        resetSurface();
+        this.surface.reset();
       }
       this.surface.lastX = e.clientX;
       this.surface.lastY = e.clientY;
@@ -76,27 +63,6 @@ class Shader {
     this.compileScreenProgram();
 
     this.animate();
-  }
-
-  computeSurfaceCorners () {
-    this.surface.width = this.surface.height * this.params.aspectRatio;
-
-    var halfWidth = this.surface.width * 0.5, halfHeight = this.surface.height * 0.5;
-
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.surface.buffer);
-    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array( [
-      this.surface.centerX - halfWidth, this.surface.centerY - halfHeight,
-      this.surface.centerX + halfWidth, this.surface.centerY - halfHeight,
-      this.surface.centerX - halfWidth, this.surface.centerY + halfHeight,
-      this.surface.centerX + halfWidth, this.surface.centerY - halfHeight,
-      this.surface.centerX + halfWidth, this.surface.centerY + halfHeight,
-      this.surface.centerX - halfWidth, this.surface.centerY + halfHeight ] ), this.gl.STATIC_DRAW );
-  }
-
-  resetSurface () {
-    this.surface.centerX = this.surface.centerY = 0;
-    this.surface.height = 1;
-    computeSurfaceCorners();
   }
 
   compile () {
@@ -145,8 +111,7 @@ class Shader {
     this.gl.useProgram(this.currentProgram);
 
     // Set up buffers
-    this.surface.positionAttribute = this.gl.getAttribLocation(this.currentProgram, "surfacePosAttrib");
-    this.gl.enableVertexAttribArray(this.surface.positionAttribute);
+    this.surface.onCompile(this.currentProgram);
 
     this.vertexPosition = this.gl.getAttribLocation(this.currentProgram, "position");
     this.gl.enableVertexAttribArray(this.vertexPosition);
@@ -285,8 +250,7 @@ class Shader {
     // this.canvas.style.height = window.innerHeight + 'px';
 
     this.params.resize(this.canvas.width, this.canvas.height);
-
-    this.computeSurfaceCorners();
+    this.surface.reset(this.params.aspectRatio);
 
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     this.createRenderTargets();
@@ -357,7 +321,7 @@ class Shader {
 
     this.gl.viewport(0, 0, width, height);
     this.createRenderTargets();
-    this.resetSurface();
+    this.surface.reset(this.params.aspectRatio);
     this.render();
     const img = this.canvas.toDataURL('image/png');
     this.onWindowResize();
