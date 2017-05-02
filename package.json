@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'TBD'"
+    "dev": "webpack-dev-server --content-base docs"
   },
   "keywords": [],
   "author": "fand <fand@gmork.in>",
@@ -12,7 +12,8 @@
   "devDependencies": {
     "glslify-loader": "^1.0.2",
     "raw-loader": "^0.5.1",
-    "webpack": "^2.4.1"
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {}
 }

@@ -1,4 +1,4 @@
-class Surface {
+export default class Surface {
   constructor (gl) {
     this.gl = gl;
     this.buffer = this.gl.createBuffer();

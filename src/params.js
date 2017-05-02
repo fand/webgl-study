@@ -1,4 +1,4 @@
-class Params {
+export default class Params {
   constructor () {
     this.startTime = Date.now();
     this.time = 0;

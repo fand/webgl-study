@@ -1,8 +1,11 @@
+import Params from './params';
+import Surface from './surface';
+
 const quality = 2;
 const quality_levels = [ 0.5, 1, 2, 4, 8 ];
 const errorLines = [];
 
-class Shader {
+export default class Shader {
   constructor (canvas, code) {
     this.canvas = canvas;
     this.code = code;
