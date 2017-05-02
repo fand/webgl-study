@@ -1,6 +1,7 @@
 import Params from './params';
 import Surface from './surface';
 import Program from './program';
+import Target from './target';
 
 const quality = 2;
 const quality_levels = [ 0.5, 1, 2, 4, 8 ];
@@ -13,10 +14,10 @@ export default class Shader {
     private buffer: WebGLBuffer;
     private currentProgram: Program;
     private screenProgram: Program;
-    private vertexPosition: any;
-    private screenVertexPosition: any;
-    private frontTarget: any;
-    private backTarget: any;
+    private vertexPosition: number;
+    private screenVertexPosition: number;
+    private frontTarget: Target;
+    private backTarget: Target;
 
     constructor (
         private canvas: HTMLCanvasElement,
@@ -167,43 +168,9 @@ export default class Shader {
         this.gl.enableVertexAttribArray(this.screenVertexPosition);
     }
 
-    createTarget (width, height) {
-        var target = {
-            framebuffer: this.gl.createFramebuffer(),
-            renderbuffer: this.gl.createRenderbuffer(),
-            texture: this.gl.createTexture(),
-        };
-
-        // set up framebuffer
-        this.gl.bindTexture(this.gl.TEXTURE_2D, target.texture);
-        this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, width, height, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
-
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
-
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
-        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
-
-        this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, target.framebuffer);
-        this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, target.texture, 0);
-
-        // set up renderbuffer
-        this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, target.renderbuffer);
-
-        this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.DEPTH_COMPONENT16, width, height);
-        this.gl.framebufferRenderbuffer(this.gl.FRAMEBUFFER, this.gl.DEPTH_ATTACHMENT, this.gl.RENDERBUFFER, target.renderbuffer);
-
-        // clean up
-        this.gl.bindTexture(this.gl.TEXTURE_2D, null);
-        this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, null);
-        this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
-
-        return target;
-    }
-
     createRenderTargets() {
-        this.frontTarget = this.createTarget(this.params.screenWidth, this.params.screenHeight);
-        this.backTarget = this.createTarget(this.params.screenWidth, this.params.screenHeight);
+        this.frontTarget = new Target(this.gl, this.params.screenWidth, this.params.screenHeight);
+        this.backTarget = new Target(this.gl, this.params.screenWidth, this.params.screenHeight);
     }
 
     createShader (src, type) {
