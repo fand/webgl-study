@@ -11,8 +11,7 @@ uniform vec2 resolution;
 void main( void ) {
     vec2 position = (gl_FragCoord.xy / resolution.xy);
     vec2 center = vec2(0.5, 0.5);
-    vec2 d = position - center;
-    float diff = sqrt(d.x * d.x + d.y * d.y);
+    float d = distance(position, center);
 
-    gl_FragColor = vec4(diff, diff, diff, 1.0);
+    gl_FragColor = vec4(vec3(smoothstep(d - 0.01, d, 0.4)), 1.0);
 }
