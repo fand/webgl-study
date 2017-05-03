@@ -9,4 +9,8 @@ const shaders = [
     <HTMLCanvasElement>document.querySelector('#canvas1'),
     require('./shaders/1.frag')
   ),
+  new Shader(
+    <HTMLCanvasElement>document.querySelector('#canvas2'),
+    require('./shaders/2.frag')
+  ),
 ]
