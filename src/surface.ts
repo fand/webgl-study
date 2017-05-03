@@ -11,7 +11,7 @@ export default class Surface {
     public lastX: number;
     public lastY: number;
 
-    constructor (private gl: any) {
+    constructor(private gl: any) {
         this.buffer = this.gl.createBuffer();
 
         this.centerX = 0;
@@ -24,7 +24,7 @@ export default class Surface {
         this.lastY = 0;
     }
 
-    get bufferData () {
+    get bufferData(): Float32Array {
         const halfWidth = this.width * 0.5;
         const halfHeight = this.height * 0.5;
         return new Float32Array([
@@ -37,13 +37,13 @@ export default class Surface {
         ]);
     }
 
-    reset (aspectRatio) {
+    reset(aspectRatio: number): void {
         this.width = this.height * aspectRatio;
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer);
         this.gl.bufferData(this.gl.ARRAY_BUFFER, this.bufferData, this.gl.STATIC_DRAW);
     }
 
-    onCompile (program) {
+    onCompile(program: WebGLProgram): void {
         this.positionAttribute = this.gl.getAttribLocation(program, 'surfacePosAttrib');
         this.gl.enableVertexAttribArray(this.positionAttribute);
     }

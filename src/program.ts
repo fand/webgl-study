@@ -1,5 +1,5 @@
 export default class Program {
-    public cache: Object
+    public cache: Object;
 
     constructor (
         private gl: WebGLRenderingContext,
@@ -8,11 +8,11 @@ export default class Program {
         this.cache = {};
     }
 
-    get (label) {
+    get(label: string): any {
         return this.cache[label]
     }
 
-    set (label) {
+    set(label: string): void {
         this.cache[label] = this.gl.getUniformLocation(this.program, label)
     }
 }

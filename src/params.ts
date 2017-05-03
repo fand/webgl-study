@@ -20,7 +20,7 @@ export default class Params {
         this.lastY = null;
     }
 
-    updateMouse (x, y) {
+    updateMouse(x: number, y: number): void {
         if (x === this.lastX && y === this.lastY) {
             return;
         }
@@ -30,20 +30,20 @@ export default class Params {
         this.mouseY = 1 - y;
     }
 
-    get aspectRatio () {
+    get aspectRatio(): number  {
         return this.screenWidth / this.screenHeight;
     }
 
-    get seconds () {
+    get seconds(): number {
         return this.time / 1000;
     }
 
-    resize (width, height) {
+    resize(width: number, height: number): void {
         this.screenWidth = width;
         this.screenHeight = height;
     }
 
-    tick () {
+    tick(): void {
         this.time = Date.now() - this.startTime;
     }
 }

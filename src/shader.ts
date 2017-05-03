@@ -82,7 +82,7 @@ export default class Shader {
         this.animate();
     }
 
-    compile () {
+    compile(): void {
         const program = this.gl.createProgram();
         const fragment = this.code;
         const vertex = document.getElementById('surfaceVertexShader').textContent;
@@ -133,7 +133,7 @@ export default class Shader {
         this.gl.enableVertexAttribArray(this.vertexPosition);
     }
 
-    compileScreenProgram() {
+    compileScreenProgram(): void {
         const program = this.gl.createProgram();
         const fragment = document.getElementById('fragmentShader').textContent;
         const vertex = document.getElementById('vertexShader').textContent;
@@ -168,12 +168,12 @@ export default class Shader {
         this.gl.enableVertexAttribArray(this.screenVertexPosition);
     }
 
-    createRenderTargets() {
+    createRenderTargets(): void {
         this.frontTarget = new Target(this.gl, this.params.screenWidth, this.params.screenHeight);
         this.backTarget = new Target(this.gl, this.params.screenWidth, this.params.screenHeight);
     }
 
-    createShader (src, type) {
+    createShader(src, type): WebGLShader {
         var shader = this.gl.createShader(type);
         var line, lineNum, lineError, indexEnd;
 
@@ -216,7 +216,7 @@ export default class Shader {
         return shader;
     }
 
-    onWindowResize () {
+    onWindowResize(): void {
         // TODO: resize on fullscreen mode
         // this.canvas.width = window.innerWidth / quality;
         // this.canvas.height = window.innerHeight / quality;
@@ -230,12 +230,12 @@ export default class Shader {
         this.createRenderTargets();
     }
 
-    animate () {
+    animate(): void {
         requestAnimationFrame(() => this.animate());
         this.render();
     }
 
-    render () {
+    render(): void {
         if (!this.currentProgram) { return; }
 
         this.params.tick();
@@ -288,7 +288,7 @@ export default class Shader {
         this.backTarget = tmp;
     }
 
-    getImg (width, height) {
+    getImg(width: number, height: number): string {
         this.canvas.width = width;
         this.canvas.height = height;
         this.params.resize(width, height);
