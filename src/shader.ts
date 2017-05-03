@@ -3,6 +3,11 @@ import Surface from './surface';
 import Program from './program';
 import Target from './target';
 
+declare function require(name: string);
+const screenVertexShader = require('./screen.vert');
+const screenFragmentShader = require('./screen.frag');
+const surfaceVertexShader = require('./surface.vert');
+
 const quality = 2;
 const quality_levels = [ 0.5, 1, 2, 4, 8 ];
 const errorLines = [];
@@ -135,8 +140,8 @@ export default class Shader {
 
     compileScreenProgram(): void {
         const program = this.gl.createProgram();
-        const fragment = document.getElementById('fragmentShader').textContent;
-        const vertex = document.getElementById('vertexShader').textContent;
+        const fragment = screenFragmentShader;
+        const vertex = screenVertexShader;
 
         const vs = this.createShader(vertex, this.gl.VERTEX_SHADER);
         const fs = this.createShader(fragment, this.gl.FRAGMENT_SHADER);
