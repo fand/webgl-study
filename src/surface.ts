@@ -43,8 +43,8 @@ export default class Surface {
         this.gl.bufferData(this.gl.ARRAY_BUFFER, this.bufferData, this.gl.STATIC_DRAW);
     }
 
-    onCompile(program: WebGLProgram): void {
-        this.positionAttribute = this.gl.getAttribLocation(program, 'surfacePosAttrib');
+    setPositionAttribute(attr: any): void {
+        this.positionAttribute = attr;
         this.gl.enableVertexAttribArray(this.positionAttribute);
     }
 }

@@ -87,14 +87,11 @@ export default class Shader {
         this.animate();
     }
 
-    compile(): void {
+    compileProgram(vertex: string, fragment: string): Program {
         const program = this.gl.createProgram();
-        const fragment = this.code;
-        const vertex = document.getElementById('surfaceVertexShader').textContent;
 
         const vs = this.createShader(vertex, this.gl.VERTEX_SHADER);
         const fs = this.createShader(fragment, this.gl.FRAGMENT_SHADER);
-
         if (vs == null || fs == null) {
             return null;
         }
@@ -112,65 +109,30 @@ export default class Shader {
             const validateStatus = this.gl.getProgramParameter(program, this.gl.VALIDATE_STATUS);
             console.error(error);
             console.error(`VALIDATE_STATUS: ${validateStatus}`);
-            return;
         }
 
+        // Load program into GPU
+        this.gl.useProgram(program);
+
+        return new Program(this.gl, program);
+    }
+
+    compile(): void {
         if (this.currentProgram) {
             this.gl.deleteProgram(this.currentProgram.program);
         }
 
-        this.currentProgram = new Program(this.gl, program);
+        this.currentProgram = this.compileProgram(surfaceVertexShader, this.code);
 
-        // Cache uniforms
-        this.currentProgram.set('time');
-        this.currentProgram.set('mouse');
-        this.currentProgram.set('resolution');
-        this.currentProgram.set('backbuffer');
-        this.currentProgram.set('surfaceSize');
-
-        // Load program into GPU
-        this.gl.useProgram(this.currentProgram.program);
+        this.currentProgram.setCaches(['time', 'mouse', 'resolution', 'backbuffer', 'surfaceSize']);
 
         // Set up buffers
-        this.surface.onCompile(this.currentProgram.program);
-
-        this.vertexPosition = this.gl.getAttribLocation(this.currentProgram.program, "position");
-        this.gl.enableVertexAttribArray(this.vertexPosition);
+        this.surface.setPositionAttribute(this.gl.getAttribLocation(this.currentProgram.program, 'surfacePosAttrib'));
     }
 
     compileScreenProgram(): void {
-        const program = this.gl.createProgram();
-        const fragment = screenFragmentShader;
-        const vertex = screenVertexShader;
-
-        const vs = this.createShader(vertex, this.gl.VERTEX_SHADER);
-        const fs = this.createShader(fragment, this.gl.FRAGMENT_SHADER);
-
-        this.gl.attachShader(program, vs);
-        this.gl.attachShader(program, fs);
-
-        this.gl.deleteShader(vs);
-        this.gl.deleteShader(fs);
-
-        this.gl.linkProgram(program);
-
-        if (!this.gl.getProgramParameter(program, this.gl.LINK_STATUS)) {
-            const error = this.gl.getProgramInfoLog(program);
-            const validateStatus = this.gl.getProgramParameter(program, this.gl.VALIDATE_STATUS);
-            console.error(error);
-            console.error(`VALIDATE_STATUS: ${validateStatus}`);
-            return;
-        }
-
-        this.screenProgram = new Program(this.gl, program);
-
-        this.gl.useProgram(this.screenProgram.program);
-
-        this.screenProgram.set('resolution');
-        this.screenProgram.set('texture');
-
-        this.screenVertexPosition = this.gl.getAttribLocation(this.screenProgram.program, "position");
-        this.gl.enableVertexAttribArray(this.screenVertexPosition);
+        this.screenProgram = this.compileProgram(screenVertexShader, screenFragmentShader);
+        this.screenProgram.setCaches(['resolution', 'texture']);
     }
 
     createRenderTargets(): void {
@@ -258,7 +220,7 @@ export default class Shader {
         this.gl.vertexAttribPointer(this.surface.positionAttribute, 2, this.gl.FLOAT, false, 0, 0);
 
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer);
-        this.gl.vertexAttribPointer(this.vertexPosition, 2, this.gl.FLOAT, false, 0, 0);
+        this.gl.vertexAttribPointer(this.currentProgram.vertexPosition, 2, this.gl.FLOAT, false, 0, 0);
 
         this.gl.activeTexture(this.gl.TEXTURE0);
         this.gl.bindTexture(this.gl.TEXTURE_2D, this.backTarget.texture);
@@ -276,7 +238,7 @@ export default class Shader {
         this.gl.uniform1i(this.screenProgram.get('texture'), 1);
 
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer);
-        this.gl.vertexAttribPointer(this.screenVertexPosition, 2, this.gl.FLOAT, false, 0, 0);
+        this.gl.vertexAttribPointer(this.screenProgram.vertexPosition, 2, this.gl.FLOAT, false, 0, 0);
 
         this.gl.activeTexture(this.gl.TEXTURE1);
         this.gl.bindTexture(this.gl.TEXTURE_2D, this.frontTarget.texture);
