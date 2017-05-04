@@ -73,13 +73,13 @@ export default class Shader {
 
         this.canvas.addEventListener('mousemove', (e) => {
             this.params.updateMouse(
-                e.clientX / this.canvas.width,
-                e.clientY / this.canvas.height
+                e.clientX / this.canvas.clientWidth,
+                e.clientY / this.canvas.clientHeight
             )
         }, false);
 
         this.onWindowResize();
-        window.addEventListener('resize', this.onWindowResize, false);
+        window.addEventListener('resize', () => this.onWindowResize(), false);
 
         this.compile();
         this.compileScreenProgram();
@@ -184,6 +184,9 @@ export default class Shader {
     }
 
     onWindowResize(): void {
+        this.canvas.width = this.canvas.clientWidth;
+        this.canvas.height = this.canvas.clientHeight;
+
         // TODO: resize on fullscreen mode
         // this.canvas.width = window.innerWidth / quality;
         // this.canvas.height = window.innerHeight / quality;
