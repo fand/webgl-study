@@ -3,6 +3,10 @@ declare function require(name: string);
 
 const shaders = [
   new Shader(
+    <HTMLCanvasElement>document.querySelector('#canvas6'),
+    require('./shaders/6.frag')
+  ),
+  new Shader(
     <HTMLCanvasElement>document.querySelector('#canvas5'),
     require('./shaders/5.frag')
   ),
