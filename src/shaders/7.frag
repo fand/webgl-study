@@ -11,15 +11,15 @@ uniform vec2 resolution;
 
 void main (void) {
     vec2 position = gl_FragCoord.xy / resolution.xy;
-    float t = time * time;
+    float t = mod(time * time, 123.);
 
     vec2 center = vec2(0.5);
-    vec2 to = center + vec2(cos(t), sin(fract(t) * t)) * 0.1;
+    vec2 to = center + vec2(cos(t), sin(fract(t) * t)) * 0.01;
 
     float r = 0.0;
     for (int i = 1; i <= 30; i++) {
         float ii = float(i);
-        vec2 from = center + vec2(cos(t * mod(ii, 12.9)), sin(t * ii + 13.8)) * 0.7;
+        vec2 from = center + vec2(cos(t * mod(ii, 12.9)), sin(t * ii + 13.8));
         r += line(position, from, to);
     }
 
@@ -27,14 +27,14 @@ void main (void) {
     float g = 0.0;
     for (int i = 1; i <= 30; i++) {
         float ii = float(i);
-        vec2 from = center + vec2(cos(t * mod(ii, 88.9)), sin(t * ii + 2.8)) * 0.7;
+        vec2 from = center + vec2(cos(t * mod(ii, 88.9)), sin(t * ii + 2.8));
         g += line(position, from, to);
     }
 
     float b = 0.0;
     for (int i = 1; i <= 30; i++) {
         float ii = float(i);
-        vec2 from = center + vec2(cos(t * mod(ii, 9.9)), sin(t * ii + 9.8)) * 0.7;
+        vec2 from = center + vec2(cos(t * mod(ii, 9.9)), sin(t * ii + 9.8));
         b += line(position, from, to);
     }
 

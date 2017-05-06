@@ -1,5 +1,5 @@
 // from http://stackoverflow.com/questions/15276454
-#define Thickness 0.003
+#define Thickness 0.001
 float line(in vec2 uv, in vec2 p1, in vec2 p2) {
   float a = abs(distance(p1, uv));
   float b = abs(distance(p2, uv));
