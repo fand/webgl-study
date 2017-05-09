@@ -9,6 +9,18 @@
   <h1><a href="https://fand.github.io/webgl-study">fand/webgl-study</a></h1>
   <div class="wrapper">
     <div class="left">
+      <h2>11. metaball matrix</h2>
+      <p>
+        同じ図形をn個描画するには、 `position *= n` すればよい。
+        また、`time + floor(position.y * 4.);` のようにして、セルごとの時間をずらすことができる。
+      </p>
+    </div>
+    <div class="right">
+      <div id="canvas11" class="canvas"></div>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="left">
       <h2>10. metaball</h2>
       <p>
         シェーダーではポリゴンを作る必要がないので、メタボール的な表現を簡単に実現できる。
