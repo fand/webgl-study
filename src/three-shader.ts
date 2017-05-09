@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 const DEFAULT_VERTEX_SHADER = `
 void main() {
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }
 `;
 
@@ -11,6 +11,7 @@ export default class ThreeShader {
     private scene: THREE.Scene;
     private geometry: THREE.PlaneGeometry;
     private renderer: THREE.Renderer;
+    private targets: THREE.WebGLRenderTarget[];
     private uniforms: any;
     private plane: THREE.Mesh;
     private start: number;
@@ -36,12 +37,27 @@ export default class ThreeShader {
         this.container.appendChild(this.renderer.domElement);
         ThreeShader.map.set(this.container, this);
 
+        // Create a target for backBuffer
+        this.targets = [
+            new THREE.WebGLRenderTarget(
+                this.container.clientWidth,
+                this.container.clientHeight,
+                { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
+            ),
+            new THREE.WebGLRenderTarget(
+                this.container.clientWidth,
+                this.container.clientHeight,
+                { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
+            )
+        ];
+
         // Prepare uniforms
         this.start = this.stop = Date.now();
         this.uniforms = {
             time: { type: "f", value: 0.0 },
             mouse: { type: "v2", value: new THREE.Vector2() },
             resolution: { type: "v2", value: new THREE.Vector2() },
+            backBuffer: { type: "t", value: new THREE.Texture() },
         };
 
         // Create plane
@@ -99,6 +115,9 @@ export default class ThreeShader {
 
     render() {
         this.uniforms.time.value = (Date.now() - this.start) / 1000;
+        this.targets = [this.targets[1], this.targets[0]];
+        this.uniforms.backBuffer.value = this.targets[0];
         this.renderer.render(this.scene, this.camera);
+        (<any>this.renderer).render(this.scene, this.camera, this.targets[1], true);
     }
 }

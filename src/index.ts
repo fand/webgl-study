@@ -6,6 +6,10 @@ declare function require(name: string);
 
 const shaders = [
   new ThreeShader(
+    <HTMLElement>document.querySelector('#canvas12'),
+    require('./shaders/12.frag')
+  ),
+  new ThreeShader(
     <HTMLElement>document.querySelector('#canvas11'),
     require('./shaders/11.frag')
   ),
