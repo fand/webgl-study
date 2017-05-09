@@ -1,5 +1,6 @@
 import Shader from './utils/shader';
 import ThreeShader from './three-shader';
+import * as inView from 'in-view';
 
 declare function require(name: string);
 
@@ -53,3 +54,11 @@ const shaders = [
     require('./shaders/0.frag')
   ),
 ]
+
+inView('.canvas')
+    .on('enter', el => {
+        ThreeShader.map.get(el).toggle();
+    })
+    .on('exit', el => {
+        ThreeShader.map.get(el).toggle();
+    });

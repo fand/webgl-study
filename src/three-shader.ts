@@ -14,6 +14,10 @@ export default class ThreeShader {
     private uniforms: any;
     private plane: THREE.Mesh;
     private start: number;
+    private stop: number;
+    private isPlaying: boolean;
+
+    static map: WeakMap<HTMLElement, ThreeShader> = new WeakMap();
 
     constructor(
         private container: HTMLElement,
@@ -30,9 +34,10 @@ export default class ThreeShader {
         this.renderer = new THREE.WebGLRenderer();
         // this.renderer.setPixelRatio(this.canvas.clientWidth / this.canvas.clientHeight);
         this.container.appendChild(this.renderer.domElement);
+        ThreeShader.map.set(this.container, this);
 
         // Prepare uniforms
-        this.start = Date.now();
+        this.start = this.stop = Date.now();
         this.uniforms = {
             time: { type: "f", value: 0.0 },
             mouse: { type: "v2", value: new THREE.Vector2() },
@@ -53,8 +58,10 @@ export default class ThreeShader {
         this.resize();
         window.addEventListener('resize', this.resize);
         this.renderer.domElement.addEventListener('mousemove', this.mousemove);
+        // this.renderer.domElement.addEventListener('click', this.toggle);
 
-        this.animate();
+        this.isPlaying = false;
+        this.render();
     }
 
     get aspect () {
@@ -72,8 +79,21 @@ export default class ThreeShader {
         this.uniforms.resolution.value.y = this.renderer.domElement.height;
     }
 
+    toggle = () => {
+        this.isPlaying = !this.isPlaying;
+        if (this.isPlaying) {
+            this.start = Date.now() - (this.stop - this.start);
+            this.animate();
+        }
+        else {
+            this.stop = Date.now();
+        }
+    }
+
     animate = () => {
-        requestAnimationFrame(this.animate);
+        if (this.isPlaying) {
+            requestAnimationFrame(this.animate);
+        }
         this.render();
     }
 

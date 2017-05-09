@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@types/three": "^0.84.7",
+    "in-view": "^0.6.1",
     "three": "^0.85.2"
   }
 }
