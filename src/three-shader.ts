@@ -95,8 +95,14 @@ export default class ThreeShader {
         this.uniforms.resolution.value.y = this.renderer.domElement.height;
     }
 
-    toggle = () => {
-        this.isPlaying = !this.isPlaying;
+    toggle = (isPlaying: boolean) => {
+        if (isPlaying != null) {
+            this.isPlaying = isPlaying;
+        }
+        else {
+            this.isPlaying = !this.isPlaying;
+        }
+
         if (this.isPlaying) {
             this.start = Date.now() - (this.stop - this.start);
             this.animate();

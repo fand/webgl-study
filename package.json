@@ -19,8 +19,14 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "@types/react": "^15.0.24",
     "@types/three": "^0.84.7",
     "in-view": "^0.6.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-markdown": "^2.5.0",
+    "react-remarkable": "^1.1.1",
+    "react-visibility-sensor": "^3.9.0",
     "three": "^0.85.2"
   }
 }
