@@ -1,4 +1,3 @@
-import Shader from './utils/shader';
 import ThreeShader from './three-shader';
 import * as inView from 'in-view';
 
