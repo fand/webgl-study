@@ -5,6 +5,7 @@ import App from './app';
 declare function require(name: string);
 
 const shaders = [
+    require('./shaders/16.frag'),
     require('./shaders/15.frag'),
     require('./shaders/14.frag'),
     require('./shaders/13.frag'),
@@ -18,11 +19,12 @@ const shaders = [
     require('./shaders/5.frag'),
     require('./shaders/4.frag'),
     require('./shaders/3.frag'),
-    require('./shaders/2.frag'),
-    require('./shaders/1.frag'),
-    require('./shaders/0.frag'),
+    // require('./shaders/2.frag'),
+    // require('./shaders/1.frag'),
+    // require('./shaders/0.frag'),
 ];
 const texts = [
+    require('./shaders/16.md'),
     require('./shaders/15.md'),
     require('./shaders/14.md'),
     require('./shaders/13.md'),
@@ -36,9 +38,9 @@ const texts = [
     require('./shaders/5.md'),
     require('./shaders/4.md'),
     require('./shaders/3.md'),
-    require('./shaders/2.md'),
-    require('./shaders/1.md'),
-    require('./shaders/0.md'),
+    // require('./shaders/2.md'),
+    // require('./shaders/1.md'),
+    // require('./shaders/0.md'),
 ];
 
 ReactDOM.render(
