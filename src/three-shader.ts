@@ -10,7 +10,7 @@ export default class ThreeShader {
     private camera: THREE.Camera;
     private scene: THREE.Scene;
     private geometry: THREE.PlaneGeometry;
-    private renderer: THREE.Renderer;
+    public renderer: THREE.Renderer;
     private targets: THREE.WebGLRenderTarget[];
     private uniforms: any;
     private plane: THREE.Mesh;
