@@ -5,6 +5,7 @@ import App from './app';
 declare function require(name: string);
 
 const shaders = [
+    require('./shaders/22.frag'),
     require('./shaders/21.frag'),
     require('./shaders/20.frag'),
     require('./shaders/19.frag'),
@@ -29,6 +30,7 @@ const shaders = [
     require('./shaders/0.frag'),
 ];
 const texts = [
+    require('./shaders/22.md'),
     require('./shaders/21.md'),
     require('./shaders/20.md'),
     require('./shaders/19.md'),
