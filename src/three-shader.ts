@@ -15,15 +15,11 @@ export default class ThreeShader {
     private uniforms: any;
     private plane: THREE.Mesh;
     private start: number;
-    private stop: number;
-    private isPlaying: boolean;
+    public canvas: HTMLCanvasElement;
+    private fragmentShader: string;
+    private frame: number;
 
-    static map: WeakMap<HTMLElement, ThreeShader> = new WeakMap();
-
-    constructor(
-        private container: HTMLElement,
-        private fragmentShader: string
-    ) {
+    constructor(private ratio: number, private skip: number) {
         this.scene = new THREE.Scene();
 
         // Create camera
@@ -31,28 +27,20 @@ export default class ThreeShader {
         this.camera.position.set(0, 0, 1);
         this.camera.lookAt(this.scene.position);
 
-        // Create Renderer
-        this.renderer = new THREE.WebGLRenderer();
-        // this.renderer.setPixelRatio(this.canvas.clientWidth / this.canvas.clientHeight);
-        this.container.appendChild(this.renderer.domElement);
-        ThreeShader.map.set(this.container, this);
-
         // Create a target for backBuffer
         this.targets = [
             new THREE.WebGLRenderTarget(
-                this.container.clientWidth,
-                this.container.clientHeight,
+                0, 0,
                 { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
             ),
             new THREE.WebGLRenderTarget(
-                this.container.clientWidth,
-                this.container.clientHeight,
+                0, 0,
                 { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
             )
         ];
 
         // Prepare uniforms
-        this.start = this.stop = Date.now();
+        this.start = Date.now();
         this.uniforms = {
             time: { type: "f", value: 0.0 },
             mouse: { type: "v2", value: new THREE.Vector2() },
@@ -69,19 +57,43 @@ export default class ThreeShader {
         } );
         this.plane = new THREE.Mesh(geometry, material);
         this.scene.add(this.plane);
+    }
 
-        // Events
+    public setCanvas(canvas: HTMLCanvasElement) {
+        // if (this.renderer) {
+        //     this.renderer.domElement = null;
+        //     this.renderer = null;
+        // }
+
+        this.canvas = canvas;
+        this.renderer = new THREE.WebGLRenderer({ canvas: canvas });
+        (<any>this.renderer).setPixelRatio(1 / this.ratio);
         this.resize();
         window.addEventListener('resize', this.resize);
         this.renderer.domElement.addEventListener('mousemove', this.mousemove);
-        // this.renderer.domElement.addEventListener('click', this.toggle);
 
-        this.isPlaying = false;
-        this.render();
+        this.frame = 0;
+        this.animate();
     }
 
     get aspect () {
         return this.renderer.domElement.width / this.renderer.domElement.height;
+    }
+
+    public loadShader(shader: string): void {
+        this.scene.remove(this.plane);
+
+        this.fragmentShader = shader;
+
+        // Create plane
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const material = new THREE.ShaderMaterial( {
+            uniforms: this.uniforms,
+            vertexShader: DEFAULT_VERTEX_SHADER,
+            fragmentShader: this.fragmentShader,
+        } );
+        this.plane = new THREE.Mesh(geometry, material);
+        this.scene.add(this.plane);
     }
 
     mousemove = (e: MouseEvent) => {
@@ -90,33 +102,19 @@ export default class ThreeShader {
     }
 
     resize = () => {
-        this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-        this.uniforms.resolution.value.x = this.renderer.domElement.width;
-        this.uniforms.resolution.value.y = this.renderer.domElement.height;
-    }
-
-    toggle = (isPlaying: boolean) => {
-        if (isPlaying != null) {
-            this.isPlaying = isPlaying;
-        }
-        else {
-            this.isPlaying = !this.isPlaying;
-        }
-
-        if (this.isPlaying) {
-            this.start = Date.now() - (this.stop - this.start);
-            this.animate();
-        }
-        else {
-            this.stop = Date.now();
-        }
+        const [ width, height ] = [ this.canvas.clientWidth, this.canvas.clientHeight ];
+        this.renderer.setSize(width, height);
+        this.targets.forEach(t => t.setSize(width / this.ratio, height / this.ratio));
+        this.uniforms.resolution.value.x = width / this.ratio;
+        this.uniforms.resolution.value.y = height / this.ratio;
     }
 
     animate = () => {
-        if (this.isPlaying) {
-            requestAnimationFrame(this.animate);
+        this.frame++;
+        requestAnimationFrame(this.animate);
+        if (this.frame % this.skip === 0) {
+            this.render();
         }
-        this.render();
     }
 
     render() {
