@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "thumbnail": "mkdir tmp; for f in src/shaders/*.frag; do glslify $f > tmp/$(basename $f); glsl2png tmp/$(basename $f) -t 1.5 -o docs/thumbnails/$(basename $f).png; done; rm -rf tmp",
     "dev": "webpack-dev-server --content-base docs"
   },
   "keywords": [],
   "author": "fand <fand@gmork.in>",
   "license": "MIT",
   "devDependencies": {
+    "glsl2img": "^0.1.1",
     "glslify-loader": "^1.0.2",
     "raw-loader": "^0.5.1",
     "ts-loader": "^2.0.3",

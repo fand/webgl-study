@@ -64,7 +64,7 @@ export default class App extends React.Component<IProps, IState> {
                     {this.props.shaders.map((s, i) =>
                         <Thumbnail
                             key={s}
-                            thumbnail="thumbnails/out.png"
+                            thumbnail={`thumbnails/${this.props.shaders.length - i - 1}.frag.png`}
                             number={i}
                             onMouseEnter={this.loadShader}
                             isActive={i === this.state.activeThumbnail}
