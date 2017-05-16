@@ -15,7 +15,7 @@ export default class ThreeShader {
     private uniforms: any;
     private plane: THREE.Mesh;
     private start: number;
-    private canvas: HTMLCanvasElement;
+    public canvas: HTMLCanvasElement;
     private fragmentShader: string;
     private frame: number;
 
@@ -60,10 +60,10 @@ export default class ThreeShader {
     }
 
     public setCanvas(canvas: HTMLCanvasElement) {
-        if (this.renderer) {
-            this.renderer.domElement = null;
-            this.renderer = null;
-        }
+        // if (this.renderer) {
+        //     this.renderer.domElement = null;
+        //     this.renderer = null;
+        // }
 
         this.canvas = canvas;
         this.renderer = new THREE.WebGLRenderer({ canvas: canvas });

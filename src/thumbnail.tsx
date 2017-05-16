@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { throttle } from 'lodash';
 import ThreeShader from './three-shader';
 
 interface IThumbnailProps {
@@ -11,16 +12,16 @@ interface IThumbnailProps {
 export default class Thumbnail extends React.Component<IThumbnailProps, {}> {
     public canvas: HTMLElement;
 
-    onMouseEnter = e => {
+    onMouseMove = throttle(e => {
         this.props.onMouseEnter(this.props.number, this.canvas);
-    }
+    }, 100);
 
     setRef = el => { this.canvas = el; }
 
     render() {
         return (
             <div className="thumbnail"
-                onMouseEnter={this.onMouseEnter}>
+                onMouseMove={this.onMouseMove}>
                 <a href={`?id=${this.props.number}`}>
                     <img src={this.props.thumbnail}/>
                     <canvas ref={this.setRef}

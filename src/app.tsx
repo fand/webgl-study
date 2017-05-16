@@ -32,7 +32,7 @@ export default class App extends React.Component<IProps, IState> {
     }
 
     loadShader = (i, canvas) => {
-        if (this.three) {
+        if (this.three && this.three.canvas !== canvas) {
             this.three.loadShader(this.props.shaders[i]);
             this.three.setCanvas(canvas);
         }
@@ -70,7 +70,7 @@ export default class App extends React.Component<IProps, IState> {
                             isActive={i === this.state.activeThumbnail}
                             />
                     )}
-                    {dummies.map(d => <div className="thumbnail dummy"/>)}
+                    {dummies.map(d => <div key={d} className="thumbnail dummy"/>)}
                 </div>
             </div>
         );
