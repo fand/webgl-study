@@ -25,7 +25,6 @@
     "react-dom": "^15.5.4",
     "react-markdown": "^2.5.0",
     "react-remarkable": "^1.1.1",
-    "react-visibility-sensor": "^3.9.0",
     "three": "^0.85.2"
   }
 }
