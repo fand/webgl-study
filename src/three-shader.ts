@@ -16,7 +16,6 @@ export default class ThreeShader {
     private plane: THREE.Mesh;
     private start: number;
     public canvas: HTMLCanvasElement;
-    private fragmentShader: string;
     private frame: number;
 
     constructor(private ratio: number, private skip: number) {
@@ -47,16 +46,6 @@ export default class ThreeShader {
             resolution: { type: "v2", value: new THREE.Vector2() },
             backBuffer: { type: "t", value: new THREE.Texture() },
         };
-
-        // Create plane
-        const geometry = new THREE.PlaneGeometry(2, 2);
-        const material = new THREE.ShaderMaterial( {
-            uniforms: this.uniforms,
-            vertexShader: DEFAULT_VERTEX_SHADER,
-            fragmentShader: this.fragmentShader,
-        } );
-        this.plane = new THREE.Mesh(geometry, material);
-        this.scene.add(this.plane);
     }
 
     public setCanvas(canvas: HTMLCanvasElement) {
@@ -81,17 +70,23 @@ export default class ThreeShader {
     }
 
     public loadShader(shader: string): void {
-        this.scene.remove(this.plane);
-
-        this.fragmentShader = shader;
+        if (this.plane) {
+            this.scene.remove(this.plane);
+        }
 
         // Create plane
         const geometry = new THREE.PlaneGeometry(2, 2);
-        const material = new THREE.ShaderMaterial( {
+        const material = new THREE.ShaderMaterial(<any>{
             uniforms: this.uniforms,
             vertexShader: DEFAULT_VERTEX_SHADER,
-            fragmentShader: this.fragmentShader,
-        } );
+            fragmentShader: shader,
+            extensions: {
+                derivatives: true,
+                fragDepth: false,
+                drawBuffers: false,
+                shaderTextureLOD: false,
+            },
+        });
         this.plane = new THREE.Mesh(geometry, material);
         this.scene.add(this.plane);
     }
@@ -120,7 +115,7 @@ export default class ThreeShader {
     render() {
         this.uniforms.time.value = (Date.now() - this.start) / 1000;
         this.targets = [this.targets[1], this.targets[0]];
-        this.uniforms.backBuffer.value = this.targets[0];
+        this.uniforms.backBuffer.value = this.targets[0].texture;
         this.renderer.render(this.scene, this.camera);
         (<any>this.renderer).render(this.scene, this.camera, this.targets[1], true);
     }
