@@ -6,8 +6,6 @@ void main() {
 }
 `;
 
-const RATIO = 2;
-
 export default class ThreeShader {
     private camera: THREE.Camera;
     private scene: THREE.Scene;
@@ -21,7 +19,7 @@ export default class ThreeShader {
     private fragmentShader: string;
     private frame: number;
 
-    constructor() {
+    constructor(private ratio: number, private skip: number) {
         this.scene = new THREE.Scene();
 
         // Create camera
@@ -69,7 +67,7 @@ export default class ThreeShader {
 
         this.canvas = canvas;
         this.renderer = new THREE.WebGLRenderer({ canvas: canvas });
-        (<any>this.renderer).setPixelRatio(1 / RATIO);
+        (<any>this.renderer).setPixelRatio(1 / this.ratio);
         this.resize();
         window.addEventListener('resize', this.resize);
         this.renderer.domElement.addEventListener('mousemove', this.mousemove);
@@ -106,15 +104,15 @@ export default class ThreeShader {
     resize = () => {
         const [ width, height ] = [ this.canvas.clientWidth, this.canvas.clientHeight ];
         this.renderer.setSize(width, height);
-        this.targets.forEach(t => t.setSize(width / RATIO, height / RATIO));
-        this.uniforms.resolution.value.x = width / RATIO;
-        this.uniforms.resolution.value.y = height / RATIO;
+        this.targets.forEach(t => t.setSize(width / this.ratio, height / this.ratio));
+        this.uniforms.resolution.value.x = width / this.ratio;
+        this.uniforms.resolution.value.y = height / this.ratio;
     }
 
     animate = () => {
         this.frame++;
         requestAnimationFrame(this.animate);
-        if (this.frame % 3 === 0) {
+        if (this.frame % this.skip === 0) {
             this.render();
         }
     }

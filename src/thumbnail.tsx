@@ -21,17 +21,19 @@ export default class Thumbnail extends React.Component<IThumbnailProps, {}> {
         return (
             <div className="thumbnail"
                 onMouseEnter={this.onMouseEnter}
-                style={{width: 400, height: 400, backgroundColor: '#eee'}}>
-                <img src={this.props.thumbnail} style={{ width: '100%', height: '100%'}}/>
-                <canvas ref={this.setRef}
-                    style={{
-                        opacity: this.props.isActive ? 1 : 0,
-                        width: '100%',
-                        height: '100%',
-                        top: 0,
-                        left: 0,
-                        position: 'absolute',
-                    }}/>
+                style={{width: 300, height: 300, backgroundColor: '#eee'}}>
+                <a href={`?id=${this.props.number}`}>
+                    <img src={this.props.thumbnail} style={{ width: '100%', height: '100%'}}/>
+                    <canvas ref={this.setRef}
+                        style={{
+                            opacity: this.props.isActive ? 1 : 0,
+                            width: '100%',
+                            height: '100%',
+                            top: 0,
+                            left: 0,
+                            position: 'absolute',
+                        }}/>
+                </a>
             </div>
         );
     }
