@@ -13,32 +13,32 @@ export default class Article extends React.Component<IArticleProps, {}> {
     private el: any;
     private three: ThreeShader;
 
-    constructor(props: IArticleProps) {
-        super(props);
-        this.el = null;
-        this.three = null;
-    }
-
+    // constructor(props: IArticleProps) {
+    //     super(props);
+    //     this.el = null;
+    //     this.three = null;
+    // }
+    //
     onEnterOrLeave = isVisible => {
-        if (isVisible) {
-            setTimeout(() => this.onEnter(), 10);
-        }
-        else {
-            this.onLeave();
-        }
+        // if (isVisible) {
+        //     setTimeout(() => this.onEnter(), 10);
+        // }
+        // else {
+        //     this.onLeave();
+        // }
     };
-
-    onEnter = () => {
-        this.three = new ThreeShader(this.el, this.props.shader);
-        this.three.toggle(true);
-    }
-
-    onLeave = () => {
-        this.three = null;
-        if (this.el != null) {
-            this.el.innerHTML = "";
-        }
-    }
+    //
+    // onEnter = () => {
+    //     this.three = new ThreeShader(this.el, this.props.shader);
+    //     this.three.toggle(true);
+    // }
+    //
+    // onLeave = () => {
+    //     this.three = null;
+    //     if (this.el != null) {
+    //         this.el.innerHTML = "";
+    //     }
+    // }
 
     render() {
         return (

@@ -42,3 +42,15 @@ h2 {
     width: 100%;
     height: 100%;
 }
+
+.thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+}
+.thumbnail {
+    position: relative;
+    margin: 10px;
+}
+.thumbnail img {
+    pointer-events: none;
+}
