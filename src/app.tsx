@@ -52,6 +52,12 @@ export default class App extends React.Component<IProps, IState> {
             return this.renderArticle(this.state.id);
         }
 
+        const dummiesNum = 3 - Math.floor(this.props.shaders.length % 3);
+        const dummies = (
+            dummiesNum === 3 ? [] :
+            dummiesNum === 2 ? [1, 2]: [1]
+        );
+
         return (
             <div>
                 <div className="thumbnails">
@@ -64,6 +70,7 @@ export default class App extends React.Component<IProps, IState> {
                             isActive={i === this.state.activeThumbnail}
                             />
                     )}
+                    {dummies.map(d => <div className="thumbnail dummy"/>)}
                 </div>
             </div>
         );
