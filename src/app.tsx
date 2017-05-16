@@ -42,13 +42,14 @@ export default class App extends React.Component<IProps, IState> {
     }
 
     renderArticle(id) {
+        const i = this.props.shaders.length - id - 1 ;
         return (
-            <Article shader={this.props.shaders[id]} text={this.props.texts[id]}/>
+            <Article shader={this.props.shaders[i]} text={this.props.texts[i]}/>
         );
     }
 
     render() {
-        if (this.state.id) {
+        if (this.state.id != null) {
             return this.renderArticle(this.state.id);
         }
 
@@ -65,7 +66,7 @@ export default class App extends React.Component<IProps, IState> {
                         <Thumbnail
                             key={s}
                             thumbnail={`thumbnails/${this.props.shaders.length - i - 1}.frag.png`}
-                            number={i}
+                            number={this.props.shaders.length - i - 1}
                             onMouseEnter={this.loadShader}
                             isActive={i === this.state.activeThumbnail}
                             />
