@@ -31,7 +31,8 @@ export default class App extends React.Component<IProps, IState> {
         this.three = new ThreeShader(1.5, 3);
     }
 
-    loadShader = (i, canvas) => {
+    loadShader = (id, canvas) => {
+        const i = this.props.shaders.length - id - 1;
         if (this.three && this.three.canvas !== canvas) {
             this.three.loadShader(this.props.shaders[i]);
             this.three.setCanvas(canvas);
@@ -66,7 +67,7 @@ export default class App extends React.Component<IProps, IState> {
                         <Thumbnail
                             key={s}
                             thumbnail={`thumbnails/${this.props.shaders.length - i - 1}.frag.png`}
-                            number={i}
+                            number={this.props.shaders.length - i - 1}
                             onMouseEnter={this.loadShader}
                             isActive={i === this.state.activeThumbnail}
                             />
