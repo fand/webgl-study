@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { throttle } from 'lodash';
 import ThreeShader from './three-shader';
+import * as VisibilitySensor from 'react-visibility-sensor';
 
 interface IThumbnailProps {
     thumbnail: string;
@@ -8,28 +9,57 @@ interface IThumbnailProps {
     isActive: boolean;
     onMouseEnter: Function;
 }
+interface IThumbnailState {
+    isVisible: boolean;
+}
 
-export default class Thumbnail extends React.Component<IThumbnailProps, {}> {
+const Sensor = ({ isMobile, children, onChange }) => {
+    if (isMobile) {
+        return <VisibilitySensor onChange={onChange} partialVisibility={false} children={children}/>
+    }
+    else {
+        return children;
+    }
+};
+
+export default class Thumbnail extends React.Component<IThumbnailProps, IThumbnailState> {
     public canvas: HTMLElement;
+
+    public state = {
+        isVisible: false,
+    };
 
     onMouseMove = throttle(e => {
         this.props.onMouseEnter(this.props.number, this.canvas);
-    }, 100);
+    }, 200);
 
     setRef = el => { this.canvas = el; }
 
+    onEnter = isVisible => {
+        if (isVisible === this.state.isVisible) {
+            return;
+        }
+        if (isVisible) {
+            this.onMouseMove();
+        }
+        this.setState({ isVisible });
+    }
+
     render() {
         return (
-            <div className="thumbnail"
+            <a className="thumbnail"
+                href={`?id=${this.props.number}`}
                 onMouseMove={this.onMouseMove}>
-                <a href={`?id=${this.props.number}`}>
-                    <img src={this.props.thumbnail}/>
-                    <canvas ref={this.setRef}
-                        style={{
-                            opacity: this.props.isActive ? 1 : 0,
-                        }}/>
-                </a>
-            </div>
+                <Sensor onChange={this.onEnter} isMobile={window.innerWidth < 600}>
+                    <div>
+                        <img src={this.props.thumbnail}/>
+                        <canvas ref={this.setRef}
+                            style={{
+                                opacity: this.props.isActive ? 1 : 0,
+                            }}/>
+                    </div>
+                </Sensor>
+            </a>
         );
     }
 }

@@ -53,6 +53,7 @@ h2 {
     position: relative;
 }
 .thumbnail {
+    display: block;
     position: relative;
     margin: 3%;
     flex: 1 0 300px;
