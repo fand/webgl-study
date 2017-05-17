@@ -12,7 +12,7 @@
   "author": "fand <fand@gmork.in>",
   "license": "MIT",
   "devDependencies": {
-    "glsl2img": "^0.1.1",
+    "glsl2img": "^0.2.0",
     "glslify-loader": "^1.0.2",
     "raw-loader": "^0.5.1",
     "ts-loader": "^2.0.3",
