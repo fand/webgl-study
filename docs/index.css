@@ -57,6 +57,7 @@ h2 {
     position: relative;
     margin: 3%;
     flex: 1 0 300px;
+    background: #000;
 }
 .thumbnail:before {
     position: absolute;
