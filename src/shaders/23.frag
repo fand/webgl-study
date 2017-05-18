@@ -22,5 +22,5 @@ void main (void) {
         sign(mod(pp.y + (pp.x) * r3, 2. * r3) - r3)
     );
 
-    gl_FragColor = vec4(c, c, 0, 1.);
+    gl_FragColor = vec4(c, c * 0.4, 0, 1.);
 }

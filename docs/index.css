@@ -76,3 +76,7 @@ h2 {
     top: 0;
     left: 0;
 }
+
+code {
+    font-size: 0.8em;
+}
