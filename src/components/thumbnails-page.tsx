@@ -27,10 +27,19 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
         this.three = new ThreeShader(1.5, 3);
     }
 
+    componentWillUnmount() {
+        this.three.stop();
+    }
+
     loadShader = (id, canvas) => {
+        if (!canvas) {
+            this.three.stop();
+            return;
+        }
         if (this.three && this.three.canvas !== canvas) {
             this.three.loadShader(this.props.articles[id].shader);
             this.three.setCanvas(canvas);
+            this.three.play();
         }
         this.setState({
             activeThumbnail: id,

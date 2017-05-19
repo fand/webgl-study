@@ -17,6 +17,7 @@ export default class ThreeShader {
     private start: number;
     public canvas: HTMLCanvasElement;
     private frame: number;
+    private isPlaying: boolean;
 
     constructor(private ratio: number, private skip: number) {
         this.scene = new THREE.Scene();
@@ -53,6 +54,7 @@ export default class ThreeShader {
         //     this.renderer.domElement = null;
         //     this.renderer = null;
         // }
+        if (!canvas) { return; }
 
         this.canvas = canvas;
         this.renderer = new THREE.WebGLRenderer({ canvas: canvas });
@@ -106,10 +108,20 @@ export default class ThreeShader {
 
     animate = () => {
         this.frame++;
+        if (!this.isPlaying) { return; }
         requestAnimationFrame(this.animate);
         if (this.frame % this.skip === 0) {
             this.render();
         }
+    }
+
+    play() {
+        this.isPlaying = true;
+        this.animate();
+    }
+
+    stop() {
+        this.isPlaying = false;
     }
 
     render() {

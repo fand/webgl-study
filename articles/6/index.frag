@@ -1,7 +1,7 @@
 #ifdef GL_ES
 precision mediump float;
 #endif
-w
+
 #pragma glslify: line = require(../utils/line.frag)
 
 uniform float time;

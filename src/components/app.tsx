@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import createHistory from 'history/createBrowserHistory';
 import Layout from './layout';
 import ArticlePage from './article-page';
 import ThumbnailsPage from './thumbnails-page';
@@ -13,12 +15,31 @@ interface IState {
 }
 
 export default class App extends React.Component<IProps, IState> {
+    private history: any;
+
     constructor(props: IProps) {
         super(props);
+
         const m = location.search.match(/\?id=(\d*)$/);
         this.state = {
             id: m ? +m[1] : null,
         };
+
+        this.history = createHistory();
+        this.history.listen(location => {
+            const m = location.search.match(/\?id=(\d*)$/);
+            this.setState({
+                id: m ? +m[1] : null,
+            });
+        });
+    }
+
+    static childContextTypes = {
+        history: PropTypes.any,
+    };
+
+    getChildContext() {
+        return { history: this.history };
     }
 
     renderContents() {
@@ -36,6 +57,6 @@ export default class App extends React.Component<IProps, IState> {
             <Layout title={title}>
                 {this.renderContents()}
             </Layout>
-        )
+        );
     }
 }

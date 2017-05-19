@@ -19,10 +19,16 @@ export default class Article extends React.Component<IArticleProps, {}> {
 
     componentDidMount () {
         this.three = new ThreeShader(1, 1);
-        this.three.loadShader(this.props.article.shader);
+
         if (this.canvas) {
             this.three.setCanvas(this.canvas);
+            this.three.loadShader(this.props.article.shader);
+            this.three.play();
         }
+    }
+
+    componentWillUnmount() {
+        this.three.stop();
     }
 
     setCanvas = el => this.canvas = el;

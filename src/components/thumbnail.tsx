@@ -2,6 +2,7 @@ import * as React from 'react';
 import { throttle } from 'lodash';
 import ThreeShader from '../models/three-shader';
 import * as VisibilitySensor from 'react-visibility-sensor';
+import Link from '../components/link';
 
 interface IThumbnailProps {
     thumbnail: string;
@@ -47,8 +48,8 @@ export default class Thumbnail extends React.Component<IThumbnailProps, IThumbna
 
     render() {
         return (
-            <a className="thumbnail"
-                href={`?id=${this.props.number}`}
+            <Link className="thumbnail"
+                to={`?id=${this.props.number}`}
                 onMouseMove={this.onMouseMove}>
                 <Sensor onChange={this.onEnter} isMobile={window.innerWidth < 600}>
                     <div>
@@ -59,7 +60,7 @@ export default class Thumbnail extends React.Component<IThumbnailProps, IThumbna
                             }}/>
                     </div>
                 </Sensor>
-            </a>
+            </Link>
         );
     }
 }
