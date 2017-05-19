@@ -31,11 +31,11 @@ export default class ThreeShader {
         this.targets = [
             new THREE.WebGLRenderTarget(
                 0, 0,
-                { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
+                { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBAFormat }
             ),
             new THREE.WebGLRenderTarget(
                 0, 0,
-                { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
+                { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBAFormat }
             )
         ];
 

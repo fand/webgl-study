@@ -23,6 +23,11 @@
   "dependencies": {
     "@types/react": "^15.0.24",
     "@types/three": "^0.84.7",
+    "glsl-camera-ray": "^1.0.0",
+    "glsl-raytrace": "^1.0.0",
+    "glsl-sdf-normal": "^1.0.0",
+    "glsl-sdf-primitives": "^0.0.1",
+    "glsl-square-frame": "^1.0.1",
     "history": "^4.6.1",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
