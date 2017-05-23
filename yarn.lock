@@ -1296,6 +1296,10 @@ glsl-sdf-normal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/glsl-sdf-normal/-/glsl-sdf-normal-1.0.0.tgz#0e3e90617a929f689ecabff73dd66e2821143aef"
 
+glsl-sdf-ops@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/glsl-sdf-ops/-/glsl-sdf-ops-0.0.3.tgz#6a7c4091c940dad4c65ce63c85d8b1e821d9de21"
+
 glsl-sdf-primitives@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/glsl-sdf-primitives/-/glsl-sdf-primitives-0.0.1.tgz#7a2faced950f10f272730c642b75834b35895e70"
