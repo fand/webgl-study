@@ -7,17 +7,18 @@ void main() {
 `;
 
 export default class ThreeShader {
+    canvas: HTMLCanvasElement;
+    renderer: THREE.Renderer;
+
     private camera: THREE.Camera;
-    private scene: THREE.Scene;
+    private frame: number;
     private geometry: THREE.PlaneGeometry;
-    public renderer: THREE.Renderer;
+    private isPlaying: boolean;
+    private plane: THREE.Mesh;
+    private scene: THREE.Scene;
+    private start: number;
     private targets: THREE.WebGLRenderTarget[];
     private uniforms: any;
-    private plane: THREE.Mesh;
-    private start: number;
-    public canvas: HTMLCanvasElement;
-    private frame: number;
-    private isPlaying: boolean;
 
     constructor(private ratio: number, private skip: number) {
         this.scene = new THREE.Scene();
@@ -36,20 +37,20 @@ export default class ThreeShader {
             new THREE.WebGLRenderTarget(
                 0, 0,
                 { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBAFormat }
-            )
+            ),
         ];
 
         // Prepare uniforms
         this.start = Date.now();
         this.uniforms = {
-            time: { type: "f", value: 0.0 },
+            backBuffer: { type: "t", value: new THREE.Texture() },
             mouse: { type: "v2", value: new THREE.Vector2() },
             resolution: { type: "v2", value: new THREE.Vector2() },
-            backBuffer: { type: "t", value: new THREE.Texture() },
+            time: { type: "f", value: 0.0 },
         };
     }
 
-    public setCanvas(canvas: HTMLCanvasElement) {
+    setCanvas(canvas: HTMLCanvasElement) {
         // if (this.renderer) {
         //     this.renderer.domElement = null;
         //     this.renderer = null;
@@ -57,8 +58,8 @@ export default class ThreeShader {
         if (!canvas) { return; }
 
         this.canvas = canvas;
-        this.renderer = new THREE.WebGLRenderer({ canvas: canvas });
-        (<any>this.renderer).setPixelRatio(1 / this.ratio);
+        this.renderer = new THREE.WebGLRenderer({ canvas });
+        (<any> this.renderer).setPixelRatio(1 / this.ratio);
         this.resize();
         window.addEventListener('resize', this.resize);
         this.renderer.domElement.addEventListener('mousemove', this.mousemove);
@@ -67,25 +68,25 @@ export default class ThreeShader {
         this.animate();
     }
 
-    get aspect () {
+    get aspect() {
         return this.renderer.domElement.width / this.renderer.domElement.height;
     }
 
-    public loadShader(shader: string): void {
+    loadShader(shader: string): void {
         if (this.plane) {
             this.scene.remove(this.plane);
         }
 
         // Create plane
         const geometry = new THREE.PlaneGeometry(2, 2);
-        const material = new THREE.ShaderMaterial(<any>{
+        const material = new THREE.ShaderMaterial(<any> {
             uniforms: this.uniforms,
             vertexShader: DEFAULT_VERTEX_SHADER,
             fragmentShader: shader,
             extensions: {
                 derivatives: true,
-                fragDepth: false,
                 drawBuffers: false,
+                fragDepth: false,
                 shaderTextureLOD: false,
             },
         });
@@ -124,11 +125,11 @@ export default class ThreeShader {
         this.isPlaying = false;
     }
 
-    render() {
+    private render() {
         this.uniforms.time.value = (Date.now() - this.start) / 1000;
         this.targets = [this.targets[1], this.targets[0]];
         this.uniforms.backBuffer.value = this.targets[0].texture;
         this.renderer.render(this.scene, this.camera);
-        (<any>this.renderer).render(this.scene, this.camera, this.targets[1], true);
+        (<any> this.renderer).render(this.scene, this.camera, this.targets[1], true);
     }
 }

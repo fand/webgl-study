@@ -8,7 +8,7 @@ interface IProps extends React.Props<Link> {
 export default class Link extends React.Component<any, {}> {
     static contextTypes = {
         history: PropTypes.any,
-    }
+    };
 
     onClick = e => {
         e.preventDefault();
@@ -25,4 +25,3 @@ export default class Link extends React.Component<any, {}> {
         );
     }
 }
-

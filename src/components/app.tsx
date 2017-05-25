@@ -15,28 +15,30 @@ interface IState {
 }
 
 export default class App extends React.Component<IProps, IState> {
+
+    static childContextTypes = {
+        history: PropTypes.any,
+    };
+
     private history: any;
 
     constructor(props: IProps) {
         super(props);
 
-        const m = location.search.match(/\?id=(\d*)$/);
-        this.state = {
-            id: m ? +m[1] : null,
-        };
+        this.state = this.getId();
 
         this.history = createHistory();
         this.history.listen(location => {
-            const m = location.search.match(/\?id=(\d*)$/);
-            this.setState({
-                id: m ? +m[1] : null,
-            });
+            this.setState(this.getId());
         });
     }
 
-    static childContextTypes = {
-        history: PropTypes.any,
-    };
+    getId() {
+        const m = location.search.match(/\?id=(\d*)$/);
+        return {
+            id: m ? +m[1] : null,
+        };
+    }
 
     getChildContext() {
         return { history: this.history };
@@ -44,7 +46,7 @@ export default class App extends React.Component<IProps, IState> {
 
     renderContents() {
         if (this.state.id != null) {
-            return <ArticlePage article={this.props.articles[this.state.id]}/>
+            return <ArticlePage article={this.props.articles[this.state.id]}/>;
         }
         return <ThumbnailsPage articles={this.props.articles}/>;
     }

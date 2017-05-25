@@ -50,7 +50,7 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
         const dummiesNum = 3 - Math.floor(this.props.articles.length % 3);
         const dummies = (
             dummiesNum === 3 ? [] :
-            dummiesNum === 2 ? [1, 2]: [1]
+            dummiesNum === 2 ? [1, 2] : [1]
         );
 
         return (

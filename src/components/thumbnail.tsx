@@ -8,7 +8,7 @@ interface IThumbnailProps {
     thumbnail: string;
     number: number;
     isActive: boolean;
-    onMouseEnter: Function;
+    onMouseEnter: any;
 }
 interface IThumbnailState {
     isVisible: boolean;
@@ -16,7 +16,7 @@ interface IThumbnailState {
 
 const Sensor = ({ isMobile, children, onChange }) => {
     if (isMobile) {
-        return <VisibilitySensor onChange={onChange} partialVisibility={false} children={children}/>
+        return <VisibilitySensor onChange={onChange} partialVisibility={false} children={children}/>;
     }
     else {
         return children;
@@ -24,9 +24,9 @@ const Sensor = ({ isMobile, children, onChange }) => {
 };
 
 export default class Thumbnail extends React.Component<IThumbnailProps, IThumbnailState> {
-    public canvas: HTMLElement;
+    canvas: HTMLElement;
 
-    public state = {
+    state = {
         isVisible: false,
     };
 
@@ -34,7 +34,7 @@ export default class Thumbnail extends React.Component<IThumbnailProps, IThumbna
         this.props.onMouseEnter(this.props.number, this.canvas);
     }, 200);
 
-    setRef = el => { this.canvas = el; }
+    setRef = el => { this.canvas = el; };
 
     onEnter = isVisible => {
         if (isVisible === this.state.isVisible) {
