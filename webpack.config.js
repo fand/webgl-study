@@ -18,4 +18,10 @@ module.exports = {
     ],
   },
   devtool: 'cheap-eval-source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'docs'),
+  },
+  watchOptions: {
+    ignored: /.frag$/,
+  },
 };

@@ -25,13 +25,15 @@ const write = (dst, data) => {
 };
 
 // Build
-const glob = require("glob");
-const files = glob.sync('articles/**/index.frag');
-files.forEach(path => {
-  const [src, dst] = srcAndDst(path);
-  write(dst, glsl.file(src));
-});
-logger.info(`Wrote ${files.length} files to docs/shaders`);
+if (process.argv[2] === '-b') {
+  const glob = require("glob");
+  const files = glob.sync('articles/**/index.frag');
+  files.forEach(path => {
+    const [src, dst] = srcAndDst(path);
+    write(dst, glsl.file(src));
+  });
+  logger.info(`Wrote ${files.length} files to docs/shaders`);
+}
 
 // Watch
 if (process.argv[2] === '-w') {
