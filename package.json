@@ -13,7 +13,12 @@
   "author": "fand <fand@gmork.in>",
   "license": "MIT",
   "devDependencies": {
+    "chokidar": "^1.7.0",
+    "easy-logger": "^0.0.5",
+    "eazy-logger": "^3.0.2",
+    "glob": "^7.1.2",
     "glsl2img": "^0.2.0",
+    "glslify": "^6.0.2",
     "glslify-loader": "^1.0.2",
     "raw-loader": "^0.5.1",
     "ts-loader": "^2.0.3",
