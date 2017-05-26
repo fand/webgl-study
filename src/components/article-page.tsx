@@ -27,14 +27,14 @@ export default class Article extends React.Component<IArticleProps, {}> {
             this.three.play();
         }
 
-        const socket = io('http://localhost:8081');
-        socket.on('reload', ([id, data]) => {
-            if (+id === this.props.article.id) {
-                this.three.setCanvas(this.canvas);
-                this.three.loadShader(data);
-                this.three.play();
-            }
-        });
+        if (process.env.NODE_ENV !== 'production') {
+            const socket = io('http://localhost:8081');
+            socket.on('reload', ([id, data]) => {
+                if (+id === this.props.article.id) {
+                    this.three.loadShader(data);
+                }
+            });
+        }
     }
 
     componentWillUnmount() {
