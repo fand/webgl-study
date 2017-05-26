@@ -35,6 +35,7 @@ const articles = [
     require('../articles/27').default,
     require('../articles/28').default,
     require('../articles/29').default,
+    require('../articles/30').default,
 ];
 
 ReactDOM.render(

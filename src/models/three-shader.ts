@@ -19,6 +19,7 @@ export default class ThreeShader {
     private start: number;
     private targets: THREE.WebGLRenderTarget[];
     private uniforms: any;
+    private textureLoader: THREE.TextureLoader;
 
     constructor(private ratio: number, private skip: number) {
         this.scene = new THREE.Scene();
@@ -48,13 +49,11 @@ export default class ThreeShader {
             resolution: { type: "v2", value: new THREE.Vector2() },
             time: { type: "f", value: 0.0 },
         };
+
+        this.textureLoader = new THREE.TextureLoader();
     }
 
     setCanvas(canvas: HTMLCanvasElement) {
-        // if (this.renderer) {
-        //     this.renderer.domElement = null;
-        //     this.renderer = null;
-        // }
         if (!canvas) { return; }
 
         this.canvas = canvas;
@@ -94,12 +93,20 @@ export default class ThreeShader {
         this.scene.add(this.plane);
     }
 
-    mousemove = (e: MouseEvent) => {
+    loadTexture(texture?: string): void {
+        if (!texture) { return; }
+        this.uniforms.texture = {
+            type: 't',
+            value: this.textureLoader.load(texture),
+        };
+    }
+
+    private mousemove = (e: MouseEvent) => {
         this.uniforms.mouse.value.x = e.offsetX - this.renderer.domElement.offsetLeft;
         this.uniforms.mouse.value.y = e.offsetY - this.renderer.domElement.offsetTop;
     }
 
-    resize = () => {
+    private resize = () => {
         const [ width, height ] = [ this.canvas.clientWidth, this.canvas.clientHeight ];
         this.renderer.setSize(width, height);
         this.targets.forEach(t => t.setSize(width / this.ratio, height / this.ratio));
