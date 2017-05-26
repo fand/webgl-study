@@ -41,11 +41,3 @@ ReactDOM.render(
     <App articles={articles}/>,
     document.querySelector('#app')
 );
-
-// on dev
-const io = require('socket.io-client');
-const socket = io('http://localhost:8081');
-socket.on('reload', data => {
-    console.log('>> reload!');
-    console.log(data);
-});
