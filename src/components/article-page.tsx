@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as Markdown from 'react-markdown';
 import ThreeShader from '../models/three-shader';
 import ShaderArticle from '../models/shader-article';
+import * as io from 'socket.io-client';
 
 interface IArticleProps {
     article: ShaderArticle;
@@ -24,6 +25,15 @@ export default class Article extends React.Component<IArticleProps, {}> {
             this.three.setCanvas(this.canvas);
             this.three.loadShader(this.props.article.shader);
             this.three.play();
+        }
+
+        if (process.env.NODE_ENV !== 'production') {
+            const socket = io('http://localhost:8081');
+            socket.on('reload', ([id, data]) => {
+                if (+id === this.props.article.id) {
+                    this.three.loadShader(data);
+                }
+            });
         }
     }
 

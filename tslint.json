@@ -11,6 +11,7 @@
         "jsx-no-multiline-js": false,
         "member-access": [true, "no-public"],
         "no-angle-bracket-type-assertion": false,
+        "no-console": false,
         "no-var-requires": false,
         "object-literal-sort-keys": false,
         "one-line": false,

@@ -4,18 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "NODE_ENV=production webpack",
     "thumbnail": "mkdir tmp; for f in src/shaders/*.frag; do glslify $f > tmp/$(basename $f); glsl2png tmp/$(basename $f) -t 1.5 -o docs/thumbnails/$(basename $f).png; done; rm -rf tmp",
-    "dev": "webpack-dev-server --hot",
+    "dev": "npm-run-all -s build:glsl -p dev:webpack dev:socket watch:glsl",
+    "dev:webpack": "webpack-dev-server",
+    "dev:socket": "node scripts/server.js",
+    "build:glsl": "node scripts/glslify.js -b",
+    "watch:glsl": "node scripts/glslify.js -w",
     "lint": "tslint -c tslint.json src/**/*.ts{,x} articles/**/*.ts{,x}"
   },
   "keywords": [],
   "author": "fand <fand@gmork.in>",
   "license": "MIT",
   "devDependencies": {
+    "chokidar": "^1.7.0",
+    "easy-logger": "^0.0.5",
+    "eazy-logger": "^3.0.2",
+    "glob": "^7.1.2",
     "glsl2img": "^0.2.0",
+    "glslify": "^6.0.2",
     "glslify-loader": "^1.0.2",
+    "npm-run-all": "^4.0.2",
     "raw-loader": "^0.5.1",
+    "socket.io": "^2.0.1",
     "ts-loader": "^2.0.3",
     "tslint": "^5.3.2",
     "tslint-react": "^3.0.0",
@@ -24,6 +35,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "@types/node": "^7.0.22",
     "@types/react": "^15.0.24",
     "@types/three": "^0.84.7",
     "glsl-camera-ray": "^1.0.0",
@@ -41,6 +53,7 @@
     "react-markdown": "^2.5.0",
     "react-remarkable": "^1.1.1",
     "react-visibility-sensor": "^3.9.0",
+    "socket.io-client": "^2.0.1",
     "three": "^0.85.2"
   }
 }
