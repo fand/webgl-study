@@ -1,1 +1,2 @@
 docs/bundle.js -diff
+docs/shaders/* -diff
