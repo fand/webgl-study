@@ -4,32 +4,40 @@ uniform float time;
 uniform vec2  mouse;
 uniform vec2  resolution;
 uniform sampler2D texture;
+vec2 rotate(in vec2 v, in float a) {
+    float s = sin(a);
+    float c = cos(a);
+    mat2 m = mat2(c, -s, s, c);
+    return m * v;
+}
 
 // Return YMCK
 vec4 k(in vec2 p, in vec2 cellCenter) {
-    vec4 i = texture2D(texture, cellCenter.xy / resolution.xy);
+    vec2 pp = rotate(cellCenter, -3.141592 * 0.25);
+    vec4 i = texture2D(texture, pp / resolution.xy);
     return vec4(
-        (i.r + i.g) * 0.2,
-        (i.r + i.b) * 0.2,
-        (i.g + i.b) * 0.2,
-        ((1. - i.r) + (1. - i.g) + (1. - i.b)) / 7.
+        (i.r * 2. + i.g) * 0.25,
+        (i.r + i.b) * 0.25,
+        (i.g * 2.+ i.b) * 0.25,
+        ((1. - i.r) + (1. - i.g) + (1. - i.b)) / 3.
     );
 }
 
 void main (void) {
     vec2 p = gl_FragCoord.xy;
-    float cellSize = 32. + sin(time) * 24.;
+    p = rotate(p, 3.141592 * 0.25);
+    float cellSize = 8. + sin(time) * 3.;
     vec2 cellCenter = floor(p / cellSize) * cellSize + cellSize * 0.5;
 
-    vec2 ccn = cellCenter + cellSize * vec2(0, 1);
-    vec2 cce = cellCenter + cellSize * vec2(1, 0);
-    vec2 ccw = cellCenter + cellSize * vec2(-1, 0);
-    vec2 ccs = cellCenter + cellSize * vec2(0, -1);
+    vec2 ccn = cellCenter + cellSize * vec2(-1, 1);
+    vec2 cce = cellCenter + cellSize * vec2(1, 1);
+    vec2 ccw = cellCenter + cellSize * vec2(-1, -1);
+    vec2 ccs = cellCenter + cellSize * vec2(1, -1);
 
-    vec2 pn = p + cellSize * vec2(0, 1);
-    vec2 pe = p + cellSize * vec2(1, 0);
-    vec2 pw = p + cellSize * vec2(-1, 0);
-    vec2 ps = p + cellSize * vec2(0, -1);
+    vec2 pn = p + cellSize * vec2(-1, 1);
+    vec2 pe = p + cellSize * vec2(1, 1);
+    vec2 pw = p + cellSize * vec2(-1, -1);
+    vec2 ps = p + cellSize * vec2(1, -1);
 
     vec4 c  = k(p,  cellCenter);
     vec4 cn = k(pn, ccn);
@@ -37,7 +45,7 @@ void main (void) {
     vec4 cw = k(pw, ccw);
     vec4 cs = k(ps, ccs);
 
-    vec2 pcy = p + vec2(-2, -5.);
+    vec2 pcy = p + vec2(-.5, -2.);
     float cy = (
         (1. - step(c.x,  length(pcy - cellCenter) / cellSize)) +
         (1. - step(cn.x, length(pcy - ccn) / cellSize)) +
@@ -45,7 +53,7 @@ void main (void) {
         (1. - step(cw.x, length(pcy - ccw) / cellSize)) +
         (1. - step(cs.x, length(pcy - ccs) / cellSize))
     );
-    vec2 pcm = p + vec2(5, -2.);
+    vec2 pcm = p + vec2(4, -2.);
     float cm = (
         (1. - step(c.y,  length(pcm - cellCenter) / cellSize)) +
         (1. - step(cn.y, length(pcm - ccn) / cellSize)) +
@@ -53,7 +61,7 @@ void main (void) {
         (1. - step(cw.y, length(pcm - ccw) / cellSize)) +
         (1. - step(cs.y, length(pcm - ccs) / cellSize))
     );
-    vec2 pcc = p + vec2(3., 4.);
+    vec2 pcc = p + vec2(1., 2.);
     float cc = (
         (1. - step(c.z,  length(pcc - cellCenter) / cellSize)) +
         (1. - step(cn.z, length(pcc - ccn) / cellSize)) +
