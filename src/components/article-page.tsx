@@ -11,6 +11,9 @@ interface IArticleProps {
 export default class Article extends React.Component<IArticleProps, {}> {
     private canvas: HTMLCanvasElement;
     private three: ThreeShader;
+    private audio: AudioContext;
+    private analyser: AnalyserNode;
+    private source: AudioBufferSourceNode;
 
     constructor(props: IArticleProps) {
         super(props);
@@ -26,6 +29,10 @@ export default class Article extends React.Component<IArticleProps, {}> {
             this.three.loadTexture(this.props.article.texture);
             this.three.loadShader(this.props.article.shader);
             this.three.play();
+        }
+
+        if (this.props.article.sound) {
+            this.three.loadSound(this.props.article.sound);
         }
 
         if (process.env.NODE_ENV !== 'production') {

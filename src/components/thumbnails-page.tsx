@@ -2,6 +2,7 @@ import * as React from 'react';
 import Thumbnail from './thumbnail';
 import ThreeShader from '../models/three-shader';
 import ShaderArticle from '../models/shader-article';
+import { throttle } from 'lodash';
 
 interface IThumbnailsProps {
     articles: ShaderArticle[];
@@ -31,20 +32,27 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
         this.three.stop();
     }
 
-    loadShader = (id, canvas) => {
+    loadShader = throttle((id, canvas) => {
+        if (!this.three) { return; }
         if (!canvas) {
             this.three.stop();
             return;
         }
-        if (this.three && this.three.canvas !== canvas) {
-            this.three.loadShader(this.props.articles[id].shader);
-            this.three.setCanvas(canvas);
-            this.three.play();
+        if (this.three.canvas === canvas) {
+            return;
         }
+
+        this.three.stop();
+        const article = this.props.articles[id];
+        this.three.loadShader(article.shader);
+        this.three.loadSound(article.sound, true);
+        this.three.setCanvas(canvas);
+        this.three.play();
+
         this.setState({
             activeThumbnail: id,
         });
-    }
+    }, 100);
 
     render() {
         const dummiesNum = 3 - Math.floor(this.props.articles.length % 3);

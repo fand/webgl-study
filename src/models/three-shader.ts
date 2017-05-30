@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import AudioLoader from './audio-loader';
 
 const DEFAULT_VERTEX_SHADER = `
 void main() {
@@ -20,6 +21,7 @@ export default class ThreeShader {
     private targets: THREE.WebGLRenderTarget[];
     private uniforms: any;
     private textureLoader: THREE.TextureLoader;
+    private audio: AudioLoader;
 
     constructor(private ratio: number, private skip: number) {
         this.scene = new THREE.Scene();
@@ -41,6 +43,8 @@ export default class ThreeShader {
             ),
         ];
 
+        this.audio = new AudioLoader();
+
         // Prepare uniforms
         this.start = Date.now();
         this.uniforms = {
@@ -48,6 +52,9 @@ export default class ThreeShader {
             mouse: { type: "v2", value: new THREE.Vector2() },
             resolution: { type: "v2", value: new THREE.Vector2() },
             time: { type: "f", value: 0.0 },
+            volume: { type: 'f', value: 0 },
+            spectrum: { type: 't', value: this.audio.spectrum },
+            samples: { type: 't', value: this.audio.samples },
         };
 
         this.textureLoader = new THREE.TextureLoader();
@@ -101,6 +108,10 @@ export default class ThreeShader {
         };
     }
 
+    loadSound(url: string, isSilent?: boolean): void {
+        this.audio.loadSound(url, isSilent);
+    }
+
     private mousemove = (e: MouseEvent) => {
         this.uniforms.mouse.value.x = e.offsetX - this.renderer.domElement.offsetLeft;
         this.uniforms.mouse.value.y = e.offsetY - this.renderer.domElement.offsetTop;
@@ -126,16 +137,25 @@ export default class ThreeShader {
     play() {
         this.isPlaying = true;
         this.animate();
+        this.audio.play();
     }
 
     stop() {
         this.isPlaying = false;
+        this.audio.stop();
     }
 
     private render() {
         this.uniforms.time.value = (Date.now() - this.start) / 1000;
         this.targets = [this.targets[1], this.targets[0]];
         this.uniforms.backBuffer.value = this.targets[0].texture;
+
+        // Update audio
+        if (this.audio.isPlaying) {
+            this.audio.update();
+            this.uniforms.volume.value = this.audio.getVolume();
+        }
+
         this.renderer.render(this.scene, this.camera);
         (<any> this.renderer).render(this.scene, this.camera, this.targets[1], true);
     }

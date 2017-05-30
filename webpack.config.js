@@ -17,6 +17,7 @@ module.exports = {
       { test: /\.(glsl|frag|vert)$/, loader: 'glslify-loader', exclude: /node_modules/ },
       { test: /\.md$/, loader: 'raw-loader' },
       { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader?name=images/[name].[ext]' },
+      { test: /\.(mp3|mp4|wav)$/i, loader: 'file-loader?name=sounds/[name].[ext]' },
     ],
   },
   devtool: 'cheap-eval-source-map',

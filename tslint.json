@@ -10,6 +10,7 @@
         "jsx-alignment": false,
         "jsx-no-multiline-js": false,
         "member-access": [true, "no-public"],
+        "member-ordering": false,
         "no-angle-bracket-type-assertion": false,
         "no-console": false,
         "no-var-requires": false,

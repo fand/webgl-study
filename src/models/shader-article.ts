@@ -3,6 +3,7 @@ export default class ShaderArticle {
         public id: number,
         public text: string,
         public shader: string,
-        public texture?: string
+        public texture?: string,
+        public sound?: string
     ) {}
 }

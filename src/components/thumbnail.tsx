@@ -30,9 +30,9 @@ export default class Thumbnail extends React.Component<IThumbnailProps, IThumbna
         isVisible: false,
     };
 
-    onMouseMove = throttle(e => {
+    onMouseMove = () => {
         this.props.onMouseEnter(this.props.number, this.canvas);
-    }, 200);
+    }
 
     setRef = el => { this.canvas = el; };
 
