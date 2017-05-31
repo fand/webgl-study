@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 
 export default class AudioLoader {
+    static ctx: AudioContext = new AudioContext();
+
     private ctx: AudioContext;
     private gain: GainNode;
     private analyser: AnalyserNode;
@@ -14,7 +16,7 @@ export default class AudioLoader {
     isPlaying: boolean;
 
     constructor() {
-        this.ctx = new AudioContext();
+        this.ctx = AudioLoader.ctx;
         this.gain = this.ctx.createGain();
         this.analyser = this.ctx.createAnalyser();
         this.analyser.connect(this.gain);
