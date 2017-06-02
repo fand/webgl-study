@@ -27,7 +27,7 @@ export default class Article extends React.Component<IArticleProps, {}> {
         if (this.canvas) {
             this.three.setCanvas(this.canvas);
             this.three.loadTexture(this.props.article.texture);
-            this.three.loadShader(this.props.article.shader);
+            this.three.loadShader(this.props.article.fragment);
             this.three.play();
         }
 
