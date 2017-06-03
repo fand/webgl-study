@@ -2,9 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: {
+    bundle: './src/index.tsx',
+    rss: './src/rss.ts',
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, './docs/'),
   },
   resolve: {

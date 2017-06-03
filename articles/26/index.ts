@@ -4,5 +4,5 @@ export default new ShaderArticle({
     id: 26,
     date: 'Fri May 19 00:20:11 2017 +0900',
     text: require('./README.md'),
-    texture: require('./index.frag'),
+    fragment: require('./index.frag'),
 });
