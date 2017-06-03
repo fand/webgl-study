@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm-run-all -s build:webpack build:rss",
     "build:webpack": "NODE_ENV=production webpack",
-    "build:rss": "node docs/rss.js > docs/rss.xml",
+    "build:rss": "node docs/rss.js > docs/feed.xml",
     "thumbnail": "for f in docs/shaders/*.frag; do glsl2png $f -t 1.5 -o docs/thumbnails/$(basename $f).png; done",
     "dev": "npm-run-all -s build:glsl -p dev:webpack dev:socket watch:glsl",
     "dev:webpack": "webpack-dev-server",

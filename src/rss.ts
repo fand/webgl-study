@@ -1,9 +1,10 @@
 import articles from '../articles';
+const recentArticles = articles.reverse().slice(0, 20);
 
 const opts = {
   title: 'fand/webgl-study',
   description: 'Studies for WebGL, GLSL, Three.js, etc.',
-  feedUrl: 'https://fand.github.io/webgl-study/rss.xml',
+  feedUrl: 'https://fand.github.io/webgl-study/feed.xml',
   siteUrl: 'https://fand.github.io/webgl-study',
   imageUrl: 'https://fand.github.io/webgl-study/images/icon.png',
   author: 'Takayosi Amagi',
@@ -11,10 +12,10 @@ const opts = {
   copyright: '2017 Takayosi Amagi',
   language: 'ja',
   categories: 'article',
-  lastBuildDate: new Date().toUTCString(),
+  lastBuildDate: recentArticles[0].date,
 };
 
-const items = articles.map(article => {
+const items = recentArticles.map(article => {
   return {
     title:  article.title,
     description: article.description,
@@ -59,4 +60,4 @@ console.log(`
     `).join('')}
   </channel>
 </rss>
-`);
+`.trim());
