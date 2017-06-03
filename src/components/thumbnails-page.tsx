@@ -44,7 +44,7 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
 
         this.three.stop();
         const article = this.props.articles[id];
-        this.three.loadShader(article.shader);
+        this.three.loadShader(article.fragment);
         this.three.loadTexture(article.texture);
         this.three.loadSound(article.sound, true);
         this.three.setCanvas(canvas);
