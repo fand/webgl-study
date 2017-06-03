@@ -9,10 +9,23 @@
     </description>
     <link>https://fand.github.io/webgl-study</link>
     <atom:link href="https://fand.github.io/webgl-study/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Thu Jun 01 2017 07:00:54 GMT+0900 (JST)</lastBuildDate>
+    <lastBuildDate>Sat Jun 03 2017 12:23:05 GMT+0900 (JST)</lastBuildDate>
     <copyright><![CDATA[2017 Takayosi Amagi]]></copyright>
     <managingEditor>fand.gmork@gmail.com (Takayosi Amagi)</managingEditor>
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
+    
+      <item>
+        <title><![CDATA[34. Wormhole]]></title>
+        <description><![CDATA[Distance functionの練習。テクスチャの描画も行っている。]]></description>
+        <link>http://fand.github.io/webgl-study?id=34</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=34</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Sat, 03 Jun 2017 03:23:05 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/34.frag.png" length="0" type="image/png"/>
+      </item>
     
       <item>
         <title><![CDATA[33. Glitch with Sound]]></title>
@@ -259,19 +272,6 @@
 <category>Shader</category>
         <pubDate>Thu, 11 May 2017 02:50:19 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/15.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[14. Turbine]]></title>
-        <description><![CDATA[縞模様の動く方向を、中心からの距離に応じて交互に切り替えている。動くスピードは中心に近いほど早くなるように設定した。]]></description>
-        <link>http://fand.github.io/webgl-study?id=14</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=14</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Thu, 11 May 2017 02:06:25 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/14.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>

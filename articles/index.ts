@@ -35,6 +35,7 @@ const articles = [
     require('../articles/31').default,
     require('../articles/32').default,
     require('../articles/33').default,
+    require('../articles/34').default,
 ];
 
 export default articles;
