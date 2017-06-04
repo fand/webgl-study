@@ -6,11 +6,11 @@ const float PI = 3.14159265;
 #pragma glslify: square = require('glsl-square-frame')
 #pragma glslify: camera = require('glsl-camera-ray')
 vec2 map(vec3 p);
-#pragma glslify: raytrace = require('glsl-raytrace', map = map, steps = 90)
+#pragma glslify: raytrace = require('glsl-raytrace', map = map, steps = 900)
 #pragma glslify: getNormal = require('glsl-sdf-normal', map = map)
 #define NUM 1.
 float t() {
-    return time * 1.;
+    return time * 3.;
 }
 
 float random(in vec2 p) {

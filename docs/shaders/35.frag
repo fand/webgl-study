@@ -44,14 +44,14 @@ vec2 calcRayIntersection(vec3 rayOrigin, vec3 rayDir, float maxd, float precis) 
   float type   = -1.0;
   vec2  res    = vec2(-1.0, -1.0);
 
-  for (int i = 0; i < 90; i++) {
+  for (int i = 0; i < 900; i++) {
     if (latest < precis || dist > maxd) break;
 
     vec2 result = map(rayOrigin + rayDir * dist);
 
     latest = result.x;
     type   = result.y;
-    dist  += latest * 0.7;
+    dist  += latest;
   }
 
   if (dist < maxd) {
@@ -86,7 +86,7 @@ vec3 calcNormal(vec3 pos) {
 
 #define NUM 1.
 float t() {
-    return time * 1.;
+    return time * 3.;
 }
 
 float random(in vec2 p) {
