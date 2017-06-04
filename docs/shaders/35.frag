@@ -44,14 +44,14 @@ vec2 calcRayIntersection(vec3 rayOrigin, vec3 rayDir, float maxd, float precis) 
   float type   = -1.0;
   vec2  res    = vec2(-1.0, -1.0);
 
-  for (int i = 0; i < 900; i++) {
+  for (int i = 0; i < 256; i++) {
     if (latest < precis || dist > maxd) break;
 
     vec2 result = map(rayOrigin + rayDir * dist);
 
     latest = result.x;
     type   = result.y;
-    dist  += latest;
+    dist  += latest * .1;
   }
 
   if (dist < maxd) {
@@ -99,21 +99,21 @@ float sdGround(in vec3 p) {
 
 float sdBuildings(in vec3 p) {
     vec3 pp = mod(p, 1.) - .5;
-    float height = random(p.xz - mod(p.xz, 1.));
-    float ratio = 7. * height * (1. / ((floor(p.z) - t()) * 0.2 + 1.));
-    pp.y = (p.y / ratio) - .2;
+    float height = random(p.xz - mod(p.xz, 1.)) *3.;
+    float nearness = max(floor(p.z) - t() - 2., 0.3);
+    nearness = pow(nearness, .3);
+    pp.y = p.y * 0.4 * nearness - height * 0.1;
     return length(max(abs(pp) - .25, .0));
 }
 
 vec2 map(vec3 p) {
     return vec2(min(sdGround(p), sdBuildings(p)), 0.);
-    return vec2(sdBuildings(p), 0.);
 }
 
 void main (void) {
     vec3 rayOrigin = vec3(0, 1.5, 0);
     rayOrigin.x += (sin(t() * .7) + cos(t() * .67)) * 0.07;
-    rayOrigin.y += (sin(t() * .81) + cos(t() * .8)) * 0.1;
+    rayOrigin.y += (sin(t() * .81) + cos(t() * .8)) * 0.2;
     vec3 rayTarget = vec3(0, 2, 9999999.);
     rayOrigin.z = t();
     vec3 rayDirection = getRay(rayOrigin, rayTarget, squareFrame(resolution.xy), 2.);

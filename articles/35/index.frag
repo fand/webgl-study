@@ -6,7 +6,7 @@ const float PI = 3.14159265;
 #pragma glslify: square = require('glsl-square-frame')
 #pragma glslify: camera = require('glsl-camera-ray')
 vec2 map(vec3 p);
-#pragma glslify: raytrace = require('glsl-raytrace', map = map, steps = 900)
+#pragma glslify: raytrace = require('glsl-raytrace', map = map, steps = 256)
 #pragma glslify: getNormal = require('glsl-sdf-normal', map = map)
 #define NUM 1.
 float t() {
@@ -23,21 +23,21 @@ float sdGround(in vec3 p) {
 
 float sdBuildings(in vec3 p) {
     vec3 pp = mod(p, 1.) - .5;
-    float height = random(p.xz - mod(p.xz, 1.));
-    float ratio = 7. * height * (1. / ((floor(p.z) - t()) * 0.2 + 1.));
-    pp.y = (p.y / ratio) - .2;
+    float height = random(p.xz - mod(p.xz, 1.)) *3.;
+    float nearness = max(floor(p.z) - t() - 2., 0.3);
+    nearness = pow(nearness, .3);
+    pp.y = p.y * 0.4 * nearness - height * 0.1;
     return length(max(abs(pp) - .25, .0));
 }
 
 vec2 map(vec3 p) {
     return vec2(min(sdGround(p), sdBuildings(p)), 0.);
-    return vec2(sdBuildings(p), 0.);
 }
 
 void main (void) {
     vec3 rayOrigin = vec3(0, 1.5, 0);
     rayOrigin.x += (sin(t() * .7) + cos(t() * .67)) * 0.07;
-    rayOrigin.y += (sin(t() * .81) + cos(t() * .8)) * 0.1;
+    rayOrigin.y += (sin(t() * .81) + cos(t() * .8)) * 0.2;
     vec3 rayTarget = vec3(0, 2, 9999999.);
     rayOrigin.z = t();
     vec3 rayDirection = camera(rayOrigin, rayTarget, square(resolution.xy), 2.);
