@@ -15,6 +15,19 @@
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
     
       <item>
+        <title><![CDATA[37. Square Swirl]]></title>
+        <description><![CDATA[`floor((p.x + p.y) * 100.)` のようにして、中心からの距離に応じた値を計算している。]]></description>
+        <link>http://fand.github.io/webgl-study?id=37</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=37</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Sun, 04 Jun 2017 03:30:54 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/37.frag.png" length="0" type="image/png"/>
+      </item>
+    
+      <item>
         <title><![CDATA[36. Stairs]]></title>
         <description><![CDATA[レイマーチングの練習。Distance functionにおいて、距離に加えてオブジェクトの番号を返し、色の計算に用いている。]]></description>
         <link>http://fand.github.io/webgl-study?id=36</link>
@@ -260,19 +273,6 @@
 <category>Shader</category>
         <pubDate>Fri, 12 May 2017 17:23:19 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/18.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[17. Conway's game of life]]></title>
-        <description><![CDATA[ライフゲーム。初期画面の生成には疑似乱数を用いている。]]></description>
-        <link>http://fand.github.io/webgl-study?id=17</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=17</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Fri, 12 May 2017 14:09:49 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/17.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>
