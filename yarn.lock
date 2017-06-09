@@ -1549,6 +1549,10 @@ glsl-camera-ray@^1.0.0:
   dependencies:
     glsl-look-at "^1.0.0"
 
+glsl-hsv2rgb@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/glsl-hsv2rgb/-/glsl-hsv2rgb-1.0.0.tgz#a3fed6f3354906a043f417954429da6fc7725b73"
+
 glsl-inject-defines@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/glsl-inject-defines/-/glsl-inject-defines-1.0.3.tgz#dd1aacc2c17fcb2bd3fc32411c6633d0d7b60fd4"
@@ -1564,6 +1568,10 @@ glsl-look-at@^1.0.0:
 glsl-raytrace@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/glsl-raytrace/-/glsl-raytrace-1.0.0.tgz#5fd022180a36d69522e2644d300ff20966b078de"
+
+"glsl-raytrace@git://github.com/fand/glsl-raytrace.git#add-reduction":
+  version "1.0.0"
+  resolved "git://github.com/fand/glsl-raytrace.git#688e10bd93cc6886da48454d048657dc67914b2c"
 
 glsl-resolve@0.0.1:
   version "0.0.1"

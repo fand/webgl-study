@@ -9,10 +9,24 @@
     </description>
     <link>https://fand.github.io/webgl-study</link>
     <atom:link href="https://fand.github.io/webgl-study/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sun Jun 04 2017 12:30:54 GMT+0900 (JST)</lastBuildDate>
+    <lastBuildDate>Sat Jun 10 2017 07:02:52 GMT+0900 (JST)</lastBuildDate>
     <copyright><![CDATA[2017 Takayosi Amagi]]></copyright>
     <managingEditor>fand.gmork@gmail.com (Takayosi Amagi)</managingEditor>
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
+    
+      <item>
+        <title><![CDATA[38. Soft Shadow]]></title>
+        <description><![CDATA[レイマーチングの練習。wgldを参考にオブジェクトの影を描画した。]]></description>
+        <link>http://fand.github.io/webgl-study?id=38</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=38</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>raymarching</category>
+<category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Fri, 09 Jun 2017 22:02:52 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/38.frag.png" length="0" type="image/png"/>
+      </item>
     
       <item>
         <title><![CDATA[37. Square Swirl]]></title>
@@ -23,7 +37,7 @@
         <category>WebGL</category>
 <category>GLSL</category>
 <category>Shader</category>
-        <pubDate>Sun, 04 Jun 2017 03:30:54 GMT</pubDate>
+        <pubDate>Wed, 07 Jun 2017 14:20:49 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/37.frag.png" length="0" type="image/png"/>
       </item>
     
@@ -260,19 +274,6 @@
 <category>Shader</category>
         <pubDate>Fri, 12 May 2017 21:02:49 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/19.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[18. Tiles]]></title>
-        <description><![CDATA[[The book of shadersの演習問題](https://thebookofshaders.com/09/)を解く過程で出来たアニメーション。]]></description>
-        <link>http://fand.github.io/webgl-study?id=18</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=18</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Fri, 12 May 2017 17:23:19 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/18.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>
