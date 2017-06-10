@@ -9,10 +9,24 @@
     </description>
     <link>https://fand.github.io/webgl-study</link>
     <atom:link href="https://fand.github.io/webgl-study/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sat Jun 10 2017 10:01:18 GMT+0900 (JST)</lastBuildDate>
+    <lastBuildDate>Sat Jun 10 2017 14:00:16 GMT+0900 (JST)</lastBuildDate>
     <copyright><![CDATA[2017 Takayosi Amagi]]></copyright>
     <managingEditor>fand.gmork@gmail.com (Takayosi Amagi)</managingEditor>
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
+    
+      <item>
+        <title><![CDATA[40. Bankohan / 3D Metaballs Mod]]></title>
+        <description><![CDATA[藤崎竜の封神演義に登場する武器「盤古旛」をイメージした。ボールの粘りはsmoothMinでは表現できなかったので、以下の手順で計算している。- レイの先端をP, 結合するボールの中心をC1, C2とする- `max(dot(P - C2, C1 - C2), 0.0)` により、連結箇所に近づくにつれて大きくなる値を求める- Pを上の値に応じてC2に近づける]]></description>
+        <link>http://fand.github.io/webgl-study?id=40</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=40</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>raymarching</category>
+<category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Sat, 10 Jun 2017 05:00:16 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/40.frag.png" length="0" type="image/png"/>
+      </item>
     
       <item>
         <title><![CDATA[39. SmoothMin / 3D Metaballs]]></title>
@@ -262,19 +276,6 @@
 <category>Shader</category>
         <pubDate>Mon, 15 May 2017 08:56:33 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/21.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[20. Polygon]]></title>
-        <description><![CDATA[正n角形を再帰的に描画している。GLSLでは関数の再帰呼び出しができないので、forループをネストする必要がある。]]></description>
-        <link>http://fand.github.io/webgl-study?id=20</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=20</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Sat, 13 May 2017 04:48:22 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/20.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>
