@@ -9,14 +9,28 @@
     </description>
     <link>https://fand.github.io/webgl-study</link>
     <atom:link href="https://fand.github.io/webgl-study/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sat Jun 10 2017 07:02:52 GMT+0900 (JST)</lastBuildDate>
+    <lastBuildDate>Sat Jun 10 2017 10:01:18 GMT+0900 (JST)</lastBuildDate>
     <copyright><![CDATA[2017 Takayosi Amagi]]></copyright>
     <managingEditor>fand.gmork@gmail.com (Takayosi Amagi)</managingEditor>
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
     
       <item>
+        <title><![CDATA[39. SmoothMin / 3D Metaballs]]></title>
+        <description><![CDATA[レイマーチングの練習。いわゆるsmoothMin関数を利用し、オブジェクトの結合を行った。今回はstackglのライブラリを利用せず、wgld.orgのコードを参考にしている。]]></description>
+        <link>http://fand.github.io/webgl-study?id=39</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=39</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>raymarching</category>
+<category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Sat, 10 Jun 2017 01:01:18 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/39.frag.png" length="0" type="image/png"/>
+      </item>
+    
+      <item>
         <title><![CDATA[38. Soft Shadow]]></title>
-        <description><![CDATA[レイマーチングの練習。wgldを参考にオブジェクトの影を描画した。]]></description>
+        <description><![CDATA[レイマーチングの練習。wgld.orgを参考に、オブジェクトの影を描画した。レイとオブジェクトの交点を求めたあと、光源に向かって再度マーチングを行ない、遮蔽物がある場合に影を描画している。]]></description>
         <link>http://fand.github.io/webgl-study?id=38</link>
         <guid isPermaLink="true">http://fand.github.io/webgl-study?id=38</guid>
         <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
@@ -261,19 +275,6 @@
 <category>Shader</category>
         <pubDate>Sat, 13 May 2017 04:48:22 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/20.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[19. Tartan check]]></title>
-        <description><![CDATA[タータンチェック柄を作成した。]]></description>
-        <link>http://fand.github.io/webgl-study?id=19</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=19</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Fri, 12 May 2017 21:02:49 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/19.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>
