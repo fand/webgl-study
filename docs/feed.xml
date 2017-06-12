@@ -9,10 +9,24 @@
     </description>
     <link>https://fand.github.io/webgl-study</link>
     <atom:link href="https://fand.github.io/webgl-study/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sat Jun 10 2017 14:00:16 GMT+0900 (JST)</lastBuildDate>
+    <lastBuildDate>Mon Jun 12 2017 23:31:25 GMT+0900 (JST)</lastBuildDate>
     <copyright><![CDATA[2017 Takayosi Amagi]]></copyright>
     <managingEditor>fand.gmork@gmail.com (Takayosi Amagi)</managingEditor>
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
+    
+      <item>
+        <title><![CDATA[41. Fish-eye Lens]]></title>
+        <description><![CDATA[魚眼レンズ効果をシミュレーションした。画面中心からの距離に応じてレイのベクトルのz成分を減少させることで、画面端に近いほど広角に写るようにしている。]]></description>
+        <link>http://fand.github.io/webgl-study?id=41</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=41</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>raymarching</category>
+<category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Mon, 12 Jun 2017 14:31:25 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/41.frag.png" length="0" type="image/png"/>
+      </item>
     
       <item>
         <title><![CDATA[40. Bankohan / 3D Metaballs Mod]]></title>
@@ -263,19 +277,6 @@
 <category>Shader</category>
         <pubDate>Mon, 15 May 2017 13:01:16 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/22.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[21. My icon]]></title>
-        <description><![CDATA[自分のアイコンをアニメーションさせた。内側の円を外側の円の内面に沿って回転させることもできたが、試してみたところ見た目のテンポが悪くなってしまったので、同じ方向に回転させた。]]></description>
-        <link>http://fand.github.io/webgl-study?id=21</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=21</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Mon, 15 May 2017 08:56:33 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/21.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>
