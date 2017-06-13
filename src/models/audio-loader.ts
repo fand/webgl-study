@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export default class AudioLoader {
-    static ctx: AudioContext = new AudioContext();
+    static ctx: AudioContext = new ((<any> window).AudioContext || (<any> window).webkitAudioContext)();
 
     private ctx: AudioContext;
     private gain: GainNode;
