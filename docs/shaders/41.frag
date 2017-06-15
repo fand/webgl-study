@@ -125,7 +125,7 @@ vec2 column(vec3 p) {
 
 vec2 map(vec3 p) {
     float zz = floor(p.z / 10.);
-    p.xy = rotate(p.xy, sin(zz + time) * PI * .4);
+    p.xy = rotate(p.xy, sin(zz + time) * PI * .41);
     return opU(row(p), column(p));
 }
 
