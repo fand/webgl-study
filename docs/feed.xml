@@ -9,10 +9,24 @@
     </description>
     <link>https://fand.github.io/webgl-study</link>
     <atom:link href="https://fand.github.io/webgl-study/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Thu Jun 15 2017 15:15:13 GMT+0900 (JST)</lastBuildDate>
+    <lastBuildDate>Fri Jun 16 2017 14:50:45 GMT+0900 (JST)</lastBuildDate>
     <copyright><![CDATA[2017 Takayosi Amagi]]></copyright>
     <managingEditor>fand.gmork@gmail.com (Takayosi Amagi)</managingEditor>
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
+    
+      <item>
+        <title><![CDATA[43. Mandelbrot Set]]></title>
+        <description><![CDATA[マンデルブロ集合を拡大していき、同心円状に回転している。]]></description>
+        <link>http://fand.github.io/webgl-study?id=43</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=43</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>fractal</category>
+<category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Fri, 16 Jun 2017 05:50:45 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/43.frag.png" length="0" type="image/png"/>
+      </item>
     
       <item>
         <title><![CDATA[42. Edge Lighting & Subtraction]]></title>
@@ -265,19 +279,6 @@
 <category>Shader</category>
         <pubDate>Thu, 18 May 2017 04:15:24 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/24.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[23. Triangle Tiles]]></title>
-        <description><![CDATA[正三角形のタイルを作成した。まず、座標を `(1, 0.5 * sqrt(3))` のタイルに分割し、x座標を0.5ずつずらす。その後正三角形を描くと、タイルが交互に表れるパターンになる。日本ではこの模様を鱗文様と呼ぶ。]]></description>
-        <link>http://fand.github.io/webgl-study?id=23</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=23</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Wed, 17 May 2017 14:54:50 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/23.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>

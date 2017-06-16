@@ -157,7 +157,7 @@ void main (void) {
         float diff = clamp(dot(lightDir, normal), 0., 2.0);
         vec3 c = diff * light + ambient;
 
-        float dd = 0.05;
+        float dd = 0.03;
         float edge = clamp((
             max(0., (1. - abs(dot(normal, calcNormal(vec3(pos.x + dd, pos.y, pos.z)))))) +
             max(0., (1. - abs(dot(normal, calcNormal(vec3(pos.x, pos.y + dd, pos.z)))))) +
