@@ -9,10 +9,23 @@
     </description>
     <link>https://fand.github.io/webgl-study</link>
     <atom:link href="https://fand.github.io/webgl-study/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Fri Jun 16 2017 14:50:45 GMT+0900 (JST)</lastBuildDate>
+    <lastBuildDate>Sun Jun 18 2017 15:37:40 GMT+0900 (JST)</lastBuildDate>
     <copyright><![CDATA[2017 Takayosi Amagi]]></copyright>
     <managingEditor>fand.gmork@gmail.com (Takayosi Amagi)</managingEditor>
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
+    
+      <item>
+        <title><![CDATA[44. Ryoji Ikeda]]></title>
+        <description><![CDATA[池田亮司風アニメーション。[28. Multiple Waves](./?id=28) 同様、複数のsin波をかけ合わせて複雑なパターンを作っている。]]></description>
+        <link>http://fand.github.io/webgl-study?id=44</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=44</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Sun, 18 Jun 2017 06:37:40 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/44.frag.png" length="0" type="image/png"/>
+      </item>
     
       <item>
         <title><![CDATA[43. Mandelbrot Set]]></title>
@@ -266,19 +279,6 @@
 <category>Shader</category>
         <pubDate>Thu, 18 May 2017 08:10:15 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/25.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[24. Seigaiha]]></title>
-        <description><![CDATA[青海波と呼ばれる文様を再現した。鱗文様と同様、まず座標を `(1, 0.5 * sqrt(3))` のタイルに分割する。その後、タイル内に表れる円を下から順番に描いた。このままだと波の向きが60度傾いてしまうので、最初に座標を60度回転させている。]]></description>
-        <link>http://fand.github.io/webgl-study?id=24</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=24</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Thu, 18 May 2017 04:15:24 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/24.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>
