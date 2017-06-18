@@ -9,10 +9,23 @@
     </description>
     <link>https://fand.github.io/webgl-study</link>
     <atom:link href="https://fand.github.io/webgl-study/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sun Jun 18 2017 15:37:40 GMT+0900 (JST)</lastBuildDate>
+    <lastBuildDate>Sun Jun 18 2017 17:17:38 GMT+0900 (JST)</lastBuildDate>
     <copyright><![CDATA[2017 Takayosi Amagi]]></copyright>
     <managingEditor>fand.gmork@gmail.com (Takayosi Amagi)</managingEditor>
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
+    
+      <item>
+        <title><![CDATA[45. Fireball]]></title>
+        <description><![CDATA[ノイズとメタボールを組み合わせて、火の玉を表現した。画面中心からの距離を累乗することで、外側のノイズが細かくなるようにしている。]]></description>
+        <link>http://fand.github.io/webgl-study?id=45</link>
+        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=45</guid>
+        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
+        <category>WebGL</category>
+<category>GLSL</category>
+<category>Shader</category>
+        <pubDate>Sun, 18 Jun 2017 08:17:38 GMT</pubDate>
+        <enclosure url="https://fand.github.io/webgl-study/thumbnails/45.frag.png" length="0" type="image/png"/>
+      </item>
     
       <item>
         <title><![CDATA[44. Ryoji Ikeda]]></title>
@@ -266,19 +279,6 @@
 <category>Shader</category>
         <pubDate>Thu, 18 May 2017 15:20:11 GMT</pubDate>
         <enclosure url="https://fand.github.io/webgl-study/thumbnails/26.frag.png" length="0" type="image/png"/>
-      </item>
-    
-      <item>
-        <title><![CDATA[25. Sierpinski Triangle]]></title>
-        <description><![CDATA[シェルピンスキーのギャスケット。最初は正三角形で描画していたが、処理が重く満足な効果が得られなかった。そのため、まずは数式で二等辺三角形を表現し、最後に変換行列で正三角形を再現した。]]></description>
-        <link>http://fand.github.io/webgl-study?id=25</link>
-        <guid isPermaLink="true">http://fand.github.io/webgl-study?id=25</guid>
-        <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
-        <category>WebGL</category>
-<category>GLSL</category>
-<category>Shader</category>
-        <pubDate>Thu, 18 May 2017 08:10:15 GMT</pubDate>
-        <enclosure url="https://fand.github.io/webgl-study/thumbnails/25.frag.png" length="0" type="image/png"/>
       </item>
     
   </channel>

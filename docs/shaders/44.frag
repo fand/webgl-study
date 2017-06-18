@@ -30,7 +30,7 @@ float dumb(in vec2 p) {
     float r = (random(y) + 20.) * 20. + y * 10.;
     float speed = random(y) * 3.4 + 1.;
 
-    float s = (x + (time + 4.) * .4 * speed);
+    float s = (x + (time + 10.) * .4 * speed);
 
     return 1. - step(.4,
         (
