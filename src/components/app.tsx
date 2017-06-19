@@ -25,19 +25,26 @@ export default class App extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        this.state = this.getId();
+        this.state = {
+            id: this.getId(),
+        };
 
         this.history = createHistory();
         this.history.listen(location => {
-            this.setState(this.getId());
+            this.setState({ id: this.getId() });
         });
     }
 
-    getId() {
+    getId(): number {
         const m = location.search.match(/\?id=(\d*)$/);
-        return {
-            id: m ? +m[1] : null,
-        };
+        if (!m) { return null; }
+
+        const id = m[1];
+        const article = this.props.articles[id];
+
+        if (!article) { return null; }
+
+        return +id;
     }
 
     getChildContext() {

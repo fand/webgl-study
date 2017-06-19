@@ -22,6 +22,8 @@ export default class Article extends React.Component<IArticleProps, {}> {
     }
 
     componentDidMount() {
+        if (window.innerWidth < 600) { return; }
+
         this.three = new ThreeShader(1, 1);
 
         if (this.canvas) {
@@ -52,13 +54,17 @@ export default class Article extends React.Component<IArticleProps, {}> {
     setCanvas = el => this.canvas = el;
 
     render() {
+        const isMobile = window.innerWidth < 600;
         return (
             <article className="wrapper">
                 <div className="left">
                     <Markdown source={this.props.article.text}/>
                 </div>
                 <div className="right">
-                    <canvas ref={this.setCanvas} className="canvas"/>
+                    {isMobile ?
+                        <img src={`thumbnails/${this.props.article.id}.gif`}/> :
+                        <canvas ref={this.setCanvas} className="canvas"/>
+                    }
                 </div>
             </article>
         );

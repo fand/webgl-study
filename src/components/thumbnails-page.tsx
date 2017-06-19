@@ -68,7 +68,7 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
                     {this.props.articles.slice().reverse().map((a, i) =>
                         <Thumbnail
                             key={a.id}
-                            thumbnail={`thumbnails/${a.id}.frag.png`}
+                            thumbnail={`thumbnails/${a.id}.png`}
                             number={a.id}
                             onMouseEnter={this.loadShader}
                             isActive={a.id === this.state.activeThumbnail}

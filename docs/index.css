@@ -35,7 +35,7 @@ h2 {
     content: '';
     padding-bottom: 100%;
 }
-.right .canvas {
+.right .canvas, .right img {
     position: absolute;
     top: 0;
     bottom: 0;
