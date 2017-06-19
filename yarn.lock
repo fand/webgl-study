@@ -673,14 +673,6 @@ create-hmac@^1.1.0, create-hmac@^1.1.2:
     create-hash "^1.1.0"
     inherits "^2.0.1"
 
-create-react-class@^15.5.1:
-  version "15.5.3"
-  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.5.3.tgz#fb0f7cae79339e9a179e194ef466efa3923820fe"
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
 cross-spawn@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -1564,10 +1556,6 @@ glsl-inject-defines@^1.0.1:
 glsl-look-at@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/glsl-look-at/-/glsl-look-at-1.0.0.tgz#633bb179541c2fd5e8f591d6d2dd9d451e289f7b"
-
-glsl-raytrace@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/glsl-raytrace/-/glsl-raytrace-1.0.0.tgz#5fd022180a36d69522e2644d300ff20966b078de"
 
 "glsl-raytrace@git://github.com/fand/glsl-raytrace.git#add-reduction":
   version "1.0.0"
@@ -3109,13 +3097,6 @@ react-side-effect@^1.1.0:
   dependencies:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
-
-react-visibility-sensor@^3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/react-visibility-sensor/-/react-visibility-sensor-3.9.0.tgz#c7a88a208f36237454f55a2090738f5797ea1284"
-  dependencies:
-    create-react-class "^15.5.1"
-    prop-types "^15.5.4"
 
 react@^15.5.4:
   version "15.5.4"
