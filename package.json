@@ -18,13 +18,15 @@
   "keywords": [],
   "author": "fand <fand@gmork.in>",
   "license": "MIT",
+  "peerDependencies": {
+    "glsl2img": "latest"
+  },
   "devDependencies": {
     "chokidar": "^1.7.0",
     "easy-logger": "^0.0.5",
     "eazy-logger": "^3.0.2",
     "file-loader": "^0.11.1",
     "glob": "^7.1.2",
-    "glsl2img": "^0.2.0",
     "glslify": "^6.0.2",
     "glslify-loader": "^1.0.2",
     "npm-run-all": "^4.0.2",
