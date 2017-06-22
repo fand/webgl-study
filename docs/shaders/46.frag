@@ -44,7 +44,7 @@ vec2 calcRayIntersection(vec3 rayOrigin, vec3 rayDir, float maxd, float precis, 
   float type   = -1.0;
   vec2  res    = vec2(-1.0, -1.0);
 
-  for (int i = 0; i < 120; i++) {
+  for (int i = 0; i < 192; i++) {
     if (latest < precis || dist > maxd) break;
 
     vec2 result = map(rayOrigin + rayDir * dist);
@@ -100,7 +100,11 @@ vec2 rotate(in vec2 v, in float a) {
 #define NUM 1.
 
 float t() {
-    return time;
+    return (time + 3.) * 1.;
+}
+
+float random (in float x) {
+    return fract(sin(x *  13456.234));
 }
 
 float random (in vec2 p) {
@@ -138,47 +142,69 @@ vec2 opI(in vec2 p, in vec2 q) {
 }
 
 vec2 sdBox(in vec3 p) {
-    return vec2(length(max(abs(p) - 2., 0.0)), 0.);
+    return vec2(
+        length(max(abs(p) - 2., 0.0)),
+        noise(vec2(noise(p.xy * p.z * .25 + sin(time * 2.)))) * .4
+    );
 }
 
 vec2 sdSwirl(in vec3 p) {
     p.xy = rotate(p.xy, t());
-    p.z = p.z * 1.5 - 8.;
+    p.z = p.z * 1.2 -2.;
+
+    float c = noise(vec2(noise(p.xy * .3), p.z * .3));
 
     // Random distortion
-    p.x *= 1. + noise(p.xy * 2.) * .02;
-    p.y *= 1. + noise(p.xy * 2. + .3) * .02;
+    p.x += noise(p.xy * 10.) * .03;
+    p.y += noise(p.xy * 10. + .3) * .03;
 
-    vec3 p1 = p * 3.;
-    float d = p1.z + 2. - floor(abs(p1.y));
-    d = min(
-        p1.z + 2. - floor(abs(p1.y)),
-        p1.z + 2. - floor(abs(p1.x))
-    );
+    float d = 99999.;
 
-    d = max(d, -min(
-        p1.z + 3. - floor(abs(p1.y * .7)),
-        p1.z + 3. - floor(abs(p1.x * .7))
-    ));
+    for (int i = 0; i < 10; i++) {
+        float fi = float(i);
+        vec3 pi = p;
+        p.xy = rotate(p.xy, fi * PI * .5);
 
-    // Create binding box
-    float tt = floor(min(mod(t() * 30., 100.), 20.)) * .2;
-    d = max(d, length(max(abs(p) - tt, 0.0)));
+        pi.x *= clamp(1. - fi * random(fi * 4.) * .4, .3,.7);
+        pi.y *= clamp(1. - fi * random(fi * 5.) * .4, .3,.7);
 
-    d -= .2;
+        pi.x += clamp((1. - fi * random(fi + 1.)) * .4 + fi * .3, .7, 1.7);
+        pi.y += clamp((1. - fi * random(fi + 2.)) * .4 + fi * .3, .7, 1.7);
+        pi.z -= (3. - fi) + fi * 2.0;
 
-    return vec2(d, 1.);
+        pi *= 3.5;
+        float di = min(
+            pi.z + 2. - floor(abs(pi.y)),
+            pi.z + 2. - floor(abs(pi.x))
+            // -abs(p1.y) + 2. + floor(p1.z),
+            // -abs(p1.x) + 2. + floor(p1.z)
+        );
+
+        di = max(di, -min(
+            pi.z + 2. - floor(abs(pi.y * .7)),
+            pi.z + 2. - floor(abs(pi.x * .7))
+        ));
+
+        // Create binding box
+        float ti = clamp(mod(t(), 2.) - fi * .2, 0., 2.);
+        float tt = floor(ti * 20.) * .1;
+        di = max(di, length(max(abs(pi / 3.) - tt, 0.0)));
+
+        d = min(d, di);
+    }
+
+    d -= .1;
+
+    return vec2(d, c);
 }
 
 vec2 map(vec3 p) {
-    p.xy = rotate(p.xy, .2 * PI + time * .3);
-    p.yz = rotate(p.zy, .2 * PI + time * .3);
+    p.yz = rotate(p.zy, .2 * PI + t());
+    p.xy = rotate(p.xy, .2 * PI + t());
     vec2 v = sdBox(p);
 
     v = opU(v, sdSwirl(p));
-    p.yz = rotate(p.yz, (2./3.) * PI);
-    v = opU(v, sdSwirl(p));
-    p.yz = rotate(p.yz, -(4./3.) * PI);
+    p.yz = rotate(p.yz, PI);
     v = opU(v, sdSwirl(p));
 
     return v;
@@ -188,35 +214,44 @@ void main (void) {
     vec2 p = (gl_FragCoord.xy * 2. - resolution) / min(resolution.x, resolution.y);
     vec3 color;
 
-    vec3 rayOrigin = vec3(0, 0, 20.);
-    rayOrigin.xz = rotate(rayOrigin.xz, t() * .0);
+    vec3 rayOrigin = vec3(0., 0., 40.);
+    rayOrigin.xz = rotate(rayOrigin.xz, t() * 1.0);
 
     vec3 rayTarget = vec3(0, 0, 0);
     vec3 rayDirection = getRay(rayOrigin, rayTarget, squareFrame(resolution.xy), 2.);
 
-    vec3 ambient = vec3(.7, .8, -.2);
-    vec3 lightDir1 = normalize(vec3(0, .3, 1.));
-    vec3 light1 = vec3(-.4, .5, 1.);
-    vec3 lightDir2 = normalize(vec3(3., -3., -1.));
-    vec3 light2 = vec3(.8, .8, 6.);
+    vec3 ambient = vec3(.4, .7, .5);
+    vec3 lightDir1 = normalize(vec3(-1., 2.3, 10.));
+    vec3 light1 = vec3(-.4, .7, 1.) * 1.2;
+    vec3 lightDir2 = normalize(vec3(3.,  -3., 3.));
+    vec3 light2 = vec3(.8, .8, 6.) * 1.2;
 
-    vec2 collision = calcRayIntersection(rayOrigin, rayDirection, 30., 0.0001, .2);
+    vec3 lightDir3 = vec3(0, 0., 40.);
+    vec3 light3 = vec3(.9, .3, .5) * .7;
+
+    vec2 collision = calcRayIntersection(rayOrigin, rayDirection, 70., 0.0001, .2);
     if (collision.x > -.5) {
         vec3 pos = rayOrigin + rayDirection * collision.x;
-        vec3 normal = calcNormal(pos);
+        vec3 normal = normalize(calcNormal(pos));
 
         vec3 c = ambient;
 
         float diff1 = clamp(dot(lightDir1, normal), 0., 1.0);
-        float phong1 = pow(max(dot(reflect(lightDir1, normal), rayOrigin), 0.0), .5);
-        c += light1 * diff1 + phong1 * .2;
+        float phong1 = pow(max(dot(reflect(lightDir1, normal), rayOrigin), 0.0), .8);
+        c += light1 * diff1 + phong1 * 1.3;
 
         float diff2 = clamp(dot(lightDir2, normal), 0., 1.0);
-        float phong2 = pow(max(dot(reflect(lightDir2, normal), rayOrigin), 0.0), .4);
-        c += light2 * diff2 + phong2 * .2;
+        float phong2 = pow(max(dot(reflect(lightDir2, normal), rayOrigin), 0.0), .8);
+        c += light2 * diff2 + phong2 * 1.3;
+
+        float diff3 = clamp(dot(lightDir3, normal), 0., 1.0) * 9.9;
+        float phong3 = pow(max(dot(reflect(lightDir3, normal), rayOrigin), 0.0), .3);
+        c += light3 * diff3 + phong3;
 
         float d = length(rayOrigin - pos) + 1.;
-        c *= 7. / (d);
+        c *= 30. / (d * d);
+
+        c += hsv2rgb(vec3(collision.y, 1, 1)) * .3;
 
         color = c;
     }

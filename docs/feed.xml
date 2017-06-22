@@ -15,8 +15,8 @@
     <webMaster>fand.gmork@gmail.com (Takayosi Amagi)</webMaster>
     
       <item>
-        <title><![CDATA[46. Bismuth]]></title>
-        <description><![CDATA[]]></description>
+        <title><![CDATA[46. Generative Bismuth Crystal]]></title>
+        <description><![CDATA[レイマーチングでビスマス結晶をシミュレーションした。表面の色の斑や形状の歪みは、単純なバリューノイズで表現している。Fractal Brownian Motionを使ったほうが美しいが、処理が重くなってしまうので諦めた。]]></description>
         <link>http://fand.github.io/webgl-study?id=46</link>
         <guid isPermaLink="true">http://fand.github.io/webgl-study?id=46</guid>
         <dc:creator><![CDATA[Takayosi Amagi]]></dc:creator>
