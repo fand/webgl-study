@@ -4,6 +4,8 @@ import ThreeShader from '../models/three-shader';
 import ShaderArticle from '../models/shader-article';
 import * as io from 'socket.io-client';
 
+import { isMobile } from '../is-mobile';
+
 interface IArticleProps {
     article: ShaderArticle;
 }
@@ -22,7 +24,7 @@ export default class Article extends React.Component<IArticleProps, {}> {
     }
 
     componentDidMount() {
-        if (window.innerWidth < 600) { return; }
+        if (isMobile) { return; }
 
         this.three = new ThreeShader(1, 1);
 
@@ -54,7 +56,6 @@ export default class Article extends React.Component<IArticleProps, {}> {
     setCanvas = el => this.canvas = el;
 
     render() {
-        const isMobile = window.innerWidth < 600;
         return (
             <article className="wrapper">
                 <div className="left">
