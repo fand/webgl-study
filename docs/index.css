@@ -56,7 +56,7 @@ h2 {
     display: block;
     position: relative;
     margin: 3%;
-    flex: 1 0 300px;
+    flex: 1 0 180px;
     background: #000;
 }
 .thumbnail:before {
@@ -82,4 +82,23 @@ h2 {
 
 code {
     font-size: 0.8em;
+}
+
+.SidebarWrapper {
+    position: fixed;
+    width: 360px;
+    margin: 40px;
+}
+.ContentWrapper {
+    position: absolute;
+    left: 240px;
+}
+
+@media (max-width: 600px) {
+    .SidebarWrapper {
+        display: none;
+    }
+    .ContentWrapper {
+        left: 0;
+    }
 }

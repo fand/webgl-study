@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import Link from './link';
+import Sidebar from './sidebar';
 
 const analytics = `
 !function(W,e,b,G,L){W.GoogleAnalyticsObject=b;W[b]||(W[b]=function(){
@@ -18,8 +19,12 @@ const Layout = ({ title, children }) => (
             <title>{title !== '' ? `${title} - WebGL Study` : 'WebGL Study'}</title>
             <script>{analytics}</script>
         </Helmet>
-        <h1><Link to="?">fand/webgl-study</Link></h1>
-        {children}
+        <div className="SidebarWrapper">
+            <Sidebar/>
+        </div>
+        <div className="ContentWrapper">
+            {children}
+        </div>
     </div>
 );
 
