@@ -44,7 +44,7 @@ vec2 calcRayIntersection(vec3 rayOrigin, vec3 rayDir, float maxd, float precis, 
   float type   = -1.0;
   vec2  res    = vec2(-1.0, -1.0);
 
-  for (int i = 0; i < 192; i++) {
+  for (int i = 0; i < 90; i++) {
     if (latest < precis || dist > maxd) break;
 
     vec2 result = map(rayOrigin + rayDir * dist);
@@ -97,8 +97,6 @@ vec2 rotate(in vec2 v, in float a) {
     return m * v;
 }
 
-#define NUM 1.
-
 float t() {
     return (time + 3.) * 1.;
 }
@@ -126,19 +124,8 @@ float noise (in vec2 st) {
             (d - b) * u.x * u.y;
 }
 
-float fbm (in vec2 p) {
-    return (
-        noise(p * 2.) +
-        noise(p * 4.) +
-        noise(p * 8.)
-    );
-}
-
 vec2 opU(in vec2 p, in vec2 q) {
     return p.x < q.x ? p : q;
-}
-vec2 opI(in vec2 p, in vec2 q) {
-    return vec2(max(p.x, q.x), p.y);
 }
 
 vec2 sdBox(in vec3 p) {
@@ -160,7 +147,7 @@ vec2 sdSwirl(in vec3 p) {
 
     float d = 99999.;
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 4; i++) {
         float fi = float(i);
         vec3 pi = p;
         p.xy = rotate(p.xy, fi * PI * .5);
@@ -229,7 +216,7 @@ void main (void) {
     vec3 lightDir3 = vec3(0, 0., 40.);
     vec3 light3 = vec3(.9, .3, .5) * .7;
 
-    vec2 collision = calcRayIntersection(rayOrigin, rayDirection, 70., 0.0001, .2);
+    vec2 collision = calcRayIntersection(rayOrigin, rayDirection, 70., 0.0001, .3);
     if (collision.x > -.5) {
         vec3 pos = rayOrigin + rayDirection * collision.x;
         vec3 normal = normalize(calcNormal(pos));

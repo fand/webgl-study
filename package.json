@@ -61,6 +61,7 @@
     "react-markdown": "^2.5.0",
     "react-remarkable": "^1.1.1",
     "socket.io-client": "^2.0.1",
+    "styled-components": "2.0.0",
     "three": "^0.85.2"
   }
 }
