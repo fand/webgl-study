@@ -1,8 +1,39 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import Thumbnail from './thumbnail';
 import ThreeShader from '../models/three-shader';
 import ShaderArticle from '../models/shader-article';
 import { throttle } from 'lodash';
+
+const Thumbnails = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+`;
+const ThumbnailWrapper = styled.div`
+    position: relative;
+    flex: 1 0 210px;
+    min-width: 150px;
+    margin: 1%;
+    background: #000;
+    &:before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        padding-bottom: 100%;
+    }
+    @media (max-width: 600px) {
+        min-width: 93%;
+    }
+`;
+const Dummy = (ThumbnailWrapper as any).extend`
+    background: none;
+    &:before {
+        padding-bottom: 0;
+    }
+`;
 
 interface IThumbnailsProps {
     articles: ShaderArticle[];
@@ -56,27 +87,28 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
     }, 100);
 
     render() {
-        const dummiesNum = 3 - Math.floor(this.props.articles.length % 3);
+        const dummiesNum = 5 - Math.floor(this.props.articles.length % 5);
         const dummies = (
-            dummiesNum === 3 ? [] :
+            dummiesNum === 5 ? [] :
+            dummiesNum === 4 ? [1, 2, 3, 4] :
+            dummiesNum === 3 ? [1, 2, 3] :
             dummiesNum === 2 ? [1, 2] : [1]
         );
 
         return (
-            <div>
-                <div className="thumbnails">
-                    {this.props.articles.slice().reverse().map((a, i) =>
+            <Thumbnails>
+                {this.props.articles.slice().reverse().map((a, i) =>
+                    <ThumbnailWrapper key={a.id}>
                         <Thumbnail
-                            key={a.id}
                             thumbnail={`thumbnails/${a.id}.png`}
                             number={a.id}
                             onMouseEnter={this.loadShader}
                             isActive={a.id === this.state.activeThumbnail}
                             />
-                    )}
-                    {dummies.map(d => <div key={d} className="thumbnail dummy"/>)}
-                </div>
-            </div>
+                    </ThumbnailWrapper>
+                )}
+                {dummies.map(d => <Dummy key={d}/>)}
+            </Thumbnails>
         );
     }
 }

@@ -1,10 +1,42 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import * as Markdown from 'react-markdown';
 import ThreeShader from '../models/three-shader';
 import ShaderArticle from '../models/shader-article';
 import * as io from 'socket.io-client';
-
 import { isMobile } from '../is-mobile';
+
+const Wrapper = styled.article`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    margin: 10% auto 20%;
+    max-width: 1280px;
+`
+const Left = styled.div`
+    flex: 1 0 240px;
+    margin: 0 20px;
+    position: relative;
+`;
+const Right = styled.div`
+    flex: 1 0 240px;
+    margin: 0 20px;
+    position: relative;
+
+    &:before {
+        display: block;
+        content: '';
+        padding-bottom: 100%;
+    }
+    .canvas, img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+    }
+`;
 
 interface IArticleProps {
     article: ShaderArticle;
@@ -57,17 +89,17 @@ export default class Article extends React.Component<IArticleProps, {}> {
 
     render() {
         return (
-            <article className="wrapper">
-                <div className="left">
+            <Wrapper>
+                <Left>
                     <Markdown source={this.props.article.text}/>
-                </div>
-                <div className="right">
+                </Left>
+                <Right>
                     {isMobile ?
                         <img src={`thumbnails/${this.props.article.id}.gif`}/> :
                         <canvas ref={this.setCanvas} className="canvas"/>
                     }
-                </div>
-            </article>
+                </Right>
+            </Wrapper>
         );
     }
 }
