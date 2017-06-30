@@ -16,19 +16,33 @@ ga('send', 'pageview');
 `;
 
 const Wrapper = styled.div``;
-const SidebarWrapper = styled.div`
+const SidebarWrapper: any = styled.div`
     position: fixed;
-    width: 360px;
-    margin: 40px;
+    width: 250px;
+    padding: 20px;
+    margin: 10px;
+    transition: 300ms;
+    z-index: 2;
+    background: white;
+
     @media (max-width: 600px) {
-        display: none;
+        width: 100%;
+        margin: 0;
+        ${(p:any) => p.isMenuOpen? `
+            height: 100%;
+            overflow: auto;
+            padding-top: 100px;
+        `: `
+            height: 0;
+            overflow: hidden;
+        `};
     }
 `;
 const ContentWrapper = styled.div`
     position: absolute;
-    width: calc(100% - 240px);
+    width: calc(100% - 270px);
     max-width: 1280px;
-    left: 240px;
+    left: 270px;
     @media (max-width: 600px) {
         left: 0;
         top: 96px;
@@ -44,7 +58,7 @@ const HeaderWrapper = styled.div`
     height: 84px;
     background: white;
     text-align: center;
-    z-index: 2;
+    z-index: 3;
 
     display: none;
     @media (max-width: 600px) {
@@ -56,22 +70,37 @@ const getTitle = (title) => {
     return title !== '' ? `${title} - WebGL Study` : 'WebGL Study';
 };
 
-const Layout = ({ title, children }) => (
-    <Wrapper>
-        <Helmet>
-            <title>{getTitle(title)}</title>
-            <script>{analytics}</script>
-        </Helmet>
-        <SidebarWrapper>
-            <Sidebar/>
-        </SidebarWrapper>
-        <HeaderWrapper>
-            <MobileHeader title={'WebGL Study'}/>
-        </HeaderWrapper>
-        <ContentWrapper>
-            {children}
-        </ContentWrapper>
-    </Wrapper>
-);
+export default class Layout extends React.Component<any, any> {
+    constructor(props) {
+        super(props);
 
-export default Layout;
+        this.state = {
+            isMenuOpen: false,
+        };
+    }
+
+    toggleMenu = (isMenuOpen) => {
+        this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    }
+
+    render() {
+        const { title, children } = this.props;
+        return (
+            <Wrapper>
+                <Helmet>
+                    <title>{getTitle(title)}</title>
+                    <script>{analytics}</script>
+                </Helmet>
+                <SidebarWrapper isMenuOpen={this.state.isMenuOpen}>
+                    <Sidebar/>
+                </SidebarWrapper>
+                <HeaderWrapper>
+                    <MobileHeader title={'WebGL Study'} isMenuOpen={this.state.isMenuOpen} toggle={this.toggleMenu}/>
+                </HeaderWrapper>
+                <ContentWrapper>
+                    {children}
+                </ContentWrapper>
+            </Wrapper>
+        );
+    }
+}

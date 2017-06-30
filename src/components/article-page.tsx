@@ -7,7 +7,7 @@ import * as io from 'socket.io-client';
 import { isMobile } from '../is-mobile';
 
 const Wrapper = styled.article`
-    width: 94%;
+    width: 90%;
     margin: 3%;
 
     .canvas {
@@ -20,7 +20,7 @@ const Wrapper = styled.article`
             width: 100%;
             padding-bottom: 56.75%;
             @media (max-width: 600px) {
-                padding-bottom: 100%;    
+                padding-bottom: 100%;
             }
         }
         canvas, img {
