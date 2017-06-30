@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
+import { sortedUniq, flatten } from 'lodash';
 import Link from './link';
 
 const Wrapper = styled.nav`
@@ -26,7 +27,7 @@ const Wrapper = styled.nav`
         }
     }
     section {
-        margin-bottom: 20px;
+        margin: 20px 0 30px;
     }
 `;
 const Footer = styled.div`
@@ -43,6 +44,8 @@ const Footer = styled.div`
 
 export default class Sidebar extends React.Component<any, any> {
     render() {
+        const recentEntries = this.props.articles.slice(-3).reverse();
+        const categories = sortedUniq(flatten(this.props.articles.map(a => a.categories)));
         return (
             <Wrapper>
                 <h1><Link to="?">fand/webgl-study</Link></h1>
@@ -50,7 +53,7 @@ export default class Sidebar extends React.Component<any, any> {
                 <section>
                     <h2>Recent entries</h2>
                     <ul>
-                        {this.props.articles.slice(-3).reverse().map(a => (
+                        {recentEntries.map(a => (
                             <li key={a.id}><Link to={`?id=${a.id}`}>{a.title}</Link></li>
                         ))}
                     </ul>
@@ -59,8 +62,9 @@ export default class Sidebar extends React.Component<any, any> {
                 <section>
                     <h2>Categories</h2>
                     <ul>
-                        <li><Link to="?category=Raytracing">Raytracing</Link></li>
-                        <li><Link to="?category=Audio">Audio</Link></li>
+                        {categories.map(c => (
+                            <li key={c}><Link to={`?category=${c}`}>{c}</Link></li>
+                        ))}
                     </ul>
                 </section>
 

@@ -10,6 +10,9 @@ const Wrapper = styled.article`
     width: 100%;
     max-width: 720px;
 
+    h2 {
+        margin: 0 0 20px;
+    }
     .canvas {
         position: relative;
         width: 100%;

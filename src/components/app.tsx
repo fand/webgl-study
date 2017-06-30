@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import createHistory from 'history/createBrowserHistory';
+import * as qs from 'query-string';
 import Layout from './layout';
 import ArticlePage from './article-page';
 import ThumbnailsPage from './thumbnails-page';
@@ -12,6 +13,7 @@ interface IProps {
 
 interface IState {
     id: number;
+    category: string;
 }
 
 export default class App extends React.Component<IProps, IState> {
@@ -25,26 +27,25 @@ export default class App extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            id: this.getId(),
-        };
+        this.state = this.getState();
 
         this.history = createHistory();
         this.history.listen(location => {
-            this.setState({ id: this.getId() });
+            this.setState(this.getState);
         });
     }
 
-    getId(): number {
-        const m = location.search.match(/\?id=(\d*)$/);
-        if (!m) { return null; }
+    getState(): any {
+        const newState = { ...this.state };
+        const parsed = qs.parse(location.search);
 
-        const id = m[1];
-        const article = this.props.articles[id];
+        const article = this.props.articles[+parsed.id];
+        if (!article) {
+            newState.id = null;
+        }
+        newState.category = parsed.category;
 
-        if (!article) { return null; }
-
-        return +id;
+        return newState;
     }
 
     getChildContext() {
@@ -55,7 +56,8 @@ export default class App extends React.Component<IProps, IState> {
         if (this.state.id != null) {
             return <ArticlePage article={this.props.articles[this.state.id]}/>;
         }
-        return <ThumbnailsPage articles={this.props.articles}/>;
+        return <ThumbnailsPage
+            articles={this.props.articles.filter(a => a.categories.some(c => !!c.match(this.state.category)))}/>;
     }
 
     render() {
