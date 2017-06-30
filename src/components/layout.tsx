@@ -84,7 +84,7 @@ export default class Layout extends React.Component<any, any> {
     }
 
     render() {
-        const { title, children } = this.props;
+        const { title, articles, children } = this.props;
         return (
             <Wrapper>
                 <Helmet>
@@ -92,7 +92,7 @@ export default class Layout extends React.Component<any, any> {
                     <script>{analytics}</script>
                 </Helmet>
                 <SidebarWrapper isMenuOpen={this.state.isMenuOpen}>
-                    <Sidebar/>
+                    <Sidebar articles={articles}/>
                 </SidebarWrapper>
                 <HeaderWrapper>
                     <MobileHeader title={'WebGL Study'} isMenuOpen={this.state.isMenuOpen} toggle={this.toggleMenu}/>

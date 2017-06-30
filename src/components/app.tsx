@@ -63,7 +63,7 @@ export default class App extends React.Component<IProps, IState> {
         const title = article ? article.text.split('\n')[0].split('## ')[1] : '';
 
         return (
-            <Layout title={title}>
+            <Layout title={title} articles={this.props.articles}>
                 {this.renderContents()}
             </Layout>
         );

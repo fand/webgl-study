@@ -1,19 +1,77 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import Link from './link';
+
+const Wrapper = styled.nav`
+    a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    h1 {
+        font-size: 1.2em;
+        margin: 0 0 20px;
+        text-align: left;
+        @media (max-width: 600px) {
+            display: none;
+        }
+    }
+    ul {
+        padding-left: 0;
+        li {
+            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+    }
+    section {
+        margin-bottom: 20px;
+    }
+`;
+const Footer = styled.div`
+    font-size: 1.4em;
+    .fa {
+        color: #999;
+        margin-right: 4px;
+    }
+`;
 
 export default class Sidebar extends React.Component<any, any> {
     render() {
         return (
-            <nav className="sidebar">
-                <h2><Link to="?">fand/webgl-study</Link></h2>
+            <Wrapper>
+                <h1><Link to="?">fand/webgl-study</Link></h1>
 
-                <h2>Categories</h2>
-                <ul>
-                    <li><Link to="?category=Raytracing">Raytracing</Link></li>
-                    <li><Link to="?category=Audio">Audio</Link></li>
-                </ul>
-            </nav>
+                <section>
+                    <h2>Recent entries</h2>
+                    <ul>
+                        {this.props.articles.slice(-3).reverse().map(a => (
+                            <li key={a.id}><Link to={`?id=${a.id}`}>{a.title}</Link></li>
+                        ))}
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Categories</h2>
+                    <ul>
+                        <li><Link to="?category=Raytracing">Raytracing</Link></li>
+                        <li><Link to="?category=Audio">Audio</Link></li>
+                    </ul>
+                </section>
+
+                <Footer>
+                    <a href="https://fand.github.io/webgl-study/feed.xml" target="_blank">
+                        <i className="fa fa-rss-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://twitter.com/amagitakayosi" target="_blank">
+                        <i className="fa fa-twitter" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://github.com/fand/webgl-study" target="_blank">
+                        <i className="fa fa-github" aria-hidden="true"></i>
+                    </a>
+                </Footer>
+            </Wrapper>
         );
     }
 };

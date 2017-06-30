@@ -10,6 +10,10 @@ const Wrapper = styled.article`
     width: 90%;
     margin: 3%;
 
+    @media (max-width: 600px) {
+        width: 94%;
+    }
+
     .canvas {
         position: relative;
         width: 100%;
@@ -29,6 +33,10 @@ const Wrapper = styled.article`
             width: 100%;
             height: 100%;
         }
+    }
+
+    p {
+        line-height: 1.8em;
     }
 `;
 
