@@ -26,11 +26,13 @@ const SidebarWrapper = styled.div`
 `;
 const ContentWrapper = styled.div`
     position: absolute;
+    width: calc(100% - 240px);
     max-width: 1280px;
     left: 240px;
     @media (max-width: 600px) {
         left: 0;
         top: 96px;
+        width: 100%;
     }
 `;
 
