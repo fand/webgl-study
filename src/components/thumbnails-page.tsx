@@ -11,6 +11,7 @@ const Thumbnails = styled.div`
     justify-content: space-between;
     width: 100%;
     position: relative;
+    margin-top: -5px;
 `;
 const ThumbnailWrapper = styled.div`
     position: relative;
@@ -26,6 +27,7 @@ const ThumbnailWrapper = styled.div`
     }
     @media (max-width: 600px) {
         min-width: 93%;
+        margin-bottom: 10px;
     }
 `;
 const Dummy = (ThumbnailWrapper as any).extend`

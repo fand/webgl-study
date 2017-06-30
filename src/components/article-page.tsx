@@ -7,17 +7,12 @@ import * as io from 'socket.io-client';
 import { isMobile } from '../is-mobile';
 
 const Wrapper = styled.article`
-    width: 90%;
-    margin: 3%;
-
-    @media (max-width: 600px) {
-        width: 94%;
-    }
+    width: 100%;
+    max-width: 720px;
 
     .canvas {
         position: relative;
         width: 100%;
-
         &:before {
             display: block;
             content: '';

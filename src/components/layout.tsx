@@ -18,9 +18,10 @@ ga('send', 'pageview');
 const Wrapper = styled.div``;
 const SidebarWrapper: any = styled.div`
     position: fixed;
-    width: 250px;
-    padding: 20px;
-    margin: 10px;
+    width: 320px;
+    height: 100%;
+    padding: 30px;
+    box-sizing: border-box;
     transition: 300ms;
     z-index: 2;
     background: white;
@@ -40,13 +41,16 @@ const SidebarWrapper: any = styled.div`
 `;
 const ContentWrapper = styled.div`
     position: absolute;
-    width: calc(100% - 270px);
+    width: calc(100% - 320px);
     max-width: 1280px;
-    left: 270px;
+    padding: 30px 0;
+    box-sizing: border-box;
+    left: 320px;
     @media (max-width: 600px) {
         left: 0;
-        top: 96px;
+        top: 90px;
         width: 100%;
+        padding: 0 10px;
     }
 `;
 

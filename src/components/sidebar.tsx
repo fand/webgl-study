@@ -30,10 +30,14 @@ const Wrapper = styled.nav`
     }
 `;
 const Footer = styled.div`
-    font-size: 1.4em;
     .fa {
         color: #999;
+        font-size: 1.4em;
         margin-right: 4px;
+        @media (max-width: 600px) {
+            font-size: 2em;
+            margin-right: 12px;
+        }
     }
 `;
 
