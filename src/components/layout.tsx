@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import Link from './link';
 import Sidebar from './sidebar';
+import MobileHeader from './mobile-header';
 
 const analytics = `
 !function(W,e,b,G,L){W.GoogleAnalyticsObject=b;W[b]||(W[b]=function(){
@@ -29,6 +30,23 @@ const ContentWrapper = styled.div`
     left: 240px;
     @media (max-width: 600px) {
         left: 0;
+        top: 96px;
+    }
+`;
+
+const HeaderWrapper = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 84px;
+    background: white;
+    text-align: center;
+    z-index: 2;
+
+    display: none;
+    @media (max-width: 600px) {
+        display: block;
     }
 `;
 
@@ -45,6 +63,9 @@ const Layout = ({ title, children }) => (
         <SidebarWrapper>
             <Sidebar/>
         </SidebarWrapper>
+        <HeaderWrapper>
+            <MobileHeader title={'WebGL Study'}/>
+        </HeaderWrapper>
         <ContentWrapper>
             {children}
         </ContentWrapper>
