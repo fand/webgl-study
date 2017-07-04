@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import createHistory from 'history/createBrowserHistory';
+import * as qs from 'query-string';
 import Layout from './layout';
 import ArticlePage from './article-page';
 import ThumbnailsPage from './thumbnails-page';
@@ -12,6 +13,8 @@ interface IProps {
 
 interface IState {
     id: number;
+    category: string;
+    isMenuOpen: boolean;
 }
 
 export default class App extends React.Component<IProps, IState> {
@@ -25,26 +28,29 @@ export default class App extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            id: this.getId(),
-        };
+        this.state = this.getState();
 
         this.history = createHistory();
         this.history.listen(location => {
-            this.setState({ id: this.getId() });
+            this.setState(this.getState);
         });
     }
 
-    getId(): number {
-        const m = location.search.match(/\?id=(\d*)$/);
-        if (!m) { return null; }
+    toggleMenu = isMenuOpen => {
+        this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    }
 
-        const id = m[1];
-        const article = this.props.articles[id];
+    getState(): any {
+        const newState = { ...this.state };
+        const parsed = qs.parse(location.search);
 
-        if (!article) { return null; }
+        const article = this.props.articles[+parsed.id];
+        newState.id = article ? article.id : null;
+        newState.category = parsed.category;
 
-        return +id;
+        newState.isMenuOpen = false;
+
+        return newState;
     }
 
     getChildContext() {
@@ -55,7 +61,11 @@ export default class App extends React.Component<IProps, IState> {
         if (this.state.id != null) {
             return <ArticlePage article={this.props.articles[this.state.id]}/>;
         }
-        return <ThumbnailsPage articles={this.props.articles}/>;
+        return (
+            <ThumbnailsPage
+                articles={this.props.articles}
+                category={this.state.category}/>
+        );
     }
 
     render() {
@@ -63,7 +73,9 @@ export default class App extends React.Component<IProps, IState> {
         const title = article ? article.text.split('\n')[0].split('## ')[1] : '';
 
         return (
-            <Layout title={title}>
+            <Layout title={title} articles={this.props.articles}
+              isMenuOpen={this.state.isMenuOpen}
+              toggleMenu={this.toggleMenu}>
                 {this.renderContents()}
             </Layout>
         );

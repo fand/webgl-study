@@ -13,7 +13,7 @@ export default class ShaderArticle extends Article {
 
     constructor(opts: IShaderArticleOpts) {
         opts.categories = (opts.categories || []).concat([
-            'WebGL', 'GLSL', 'Shader'
+            'GLSL',
         ]);
         super(opts);
         this.fragment = opts.fragment;

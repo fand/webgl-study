@@ -22,6 +22,10 @@ export class Article {
         return this.text.split('\n')[0].replace(/#+/, '').trim();
     }
 
+    get body(): string {
+        return this.text.split('\n').slice(1).join('\n').trim();
+    }
+
     get description(): string {
         return this.text.split('\n').slice(1).join('').trim();
     }

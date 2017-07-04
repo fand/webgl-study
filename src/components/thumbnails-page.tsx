@@ -1,11 +1,50 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import Thumbnail from './thumbnail';
 import ThreeShader from '../models/three-shader';
 import ShaderArticle from '../models/shader-article';
-import { throttle } from 'lodash';
+import { throttle, range } from 'lodash';
+
+const Thumbnails = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    margin-top: -5px;
+`;
+const ThumbnailsHeader = styled.div`
+    display: block;
+    flex: 100%;
+    margin: 1%;
+`;
+const ThumbnailWrapper = styled.div`
+    position: relative;
+    flex: 1 0 210px;
+    min-width: 150px;
+    margin: 1%;
+    background: #000;
+    &:before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        padding-bottom: 100%;
+    }
+    @media (max-width: 600px) {
+        min-width: 93%;
+        margin-bottom: 10px;
+    }
+`;
+const Dummy = (ThumbnailWrapper as any).extend`
+    background: none;
+    &:before {
+        padding-bottom: 0;
+    }
+`;
 
 interface IThumbnailsProps {
     articles: ShaderArticle[];
+    category: string;
 }
 
 interface IThumbnailsState {
@@ -56,27 +95,29 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
     }, 100);
 
     render() {
-        const dummiesNum = 3 - Math.floor(this.props.articles.length % 3);
-        const dummies = (
-            dummiesNum === 3 ? [] :
-            dummiesNum === 2 ? [1, 2] : [1]
-        );
+        const articles = this.props.articles
+            .filter(a => a.categories.some(c => !!c.match(this.props.category)))
+            .reverse();
 
+        const dummiesNum = 5 - Math.floor(articles.length % 5);
+        const dummies = dummiesNum === 5 ? [] : range(dummiesNum);
         return (
-            <div>
-                <div className="thumbnails">
-                    {this.props.articles.slice().reverse().map((a, i) =>
+            <Thumbnails>
+                {[this.props.category].filter(x => x).map(c =>
+                    <ThumbnailsHeader key={c}><h2>Category: {c} ({articles.length})</h2></ThumbnailsHeader>
+                )}
+                {articles.map(a =>
+                    <ThumbnailWrapper key={a.id}>
                         <Thumbnail
-                            key={a.id}
                             thumbnail={`thumbnails/${a.id}.png`}
                             number={a.id}
                             onMouseEnter={this.loadShader}
                             isActive={a.id === this.state.activeThumbnail}
                             />
-                    )}
-                    {dummies.map(d => <div key={d} className="thumbnail dummy"/>)}
-                </div>
-            </div>
+                    </ThumbnailWrapper>
+                )}
+                {dummies.map(d => <Dummy key={d}/>)}
+            </Thumbnails>
         );
     }
 }
