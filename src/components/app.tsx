@@ -14,6 +14,7 @@ interface IProps {
 interface IState {
     id: number;
     category: string;
+    isMenuOpen: boolean;
 }
 
 export default class App extends React.Component<IProps, IState> {
@@ -35,15 +36,19 @@ export default class App extends React.Component<IProps, IState> {
         });
     }
 
+    toggleMenu = isMenuOpen => {
+        this.setState({ isMenuOpen: !this.state.isMenuOpen });
+    }
+
     getState(): any {
         const newState = { ...this.state };
         const parsed = qs.parse(location.search);
 
         const article = this.props.articles[+parsed.id];
-        if (!article) {
-            newState.id = null;
-        }
+        newState.id = article ? article.id : null;
         newState.category = parsed.category;
+
+        newState.isMenuOpen = false;
 
         return newState;
     }
@@ -56,8 +61,11 @@ export default class App extends React.Component<IProps, IState> {
         if (this.state.id != null) {
             return <ArticlePage article={this.props.articles[this.state.id]}/>;
         }
-        return <ThumbnailsPage
-            articles={this.props.articles.filter(a => a.categories.some(c => !!c.match(this.state.category)))}/>;
+        return (
+            <ThumbnailsPage
+                articles={this.props.articles}
+                category={this.state.category}/>
+        );
     }
 
     render() {
@@ -65,7 +73,9 @@ export default class App extends React.Component<IProps, IState> {
         const title = article ? article.text.split('\n')[0].split('## ')[1] : '';
 
         return (
-            <Layout title={title} articles={this.props.articles}>
+            <Layout title={title} articles={this.props.articles}
+              isMenuOpen={this.state.isMenuOpen}
+              toggleMenu={this.toggleMenu}>
                 {this.renderContents()}
             </Layout>
         );

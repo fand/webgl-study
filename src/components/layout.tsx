@@ -29,11 +29,11 @@ const SidebarWrapper: any = styled.div`
     @media (max-width: 600px) {
         width: 100%;
         margin: 0;
-        ${(p:any) => p.isMenuOpen? `
+        ${(p: any) => p.isMenuOpen ? `
             height: 100%;
             overflow: auto;
             padding-top: 100px;
-        `: `
+        ` : `
             height: 0;
             overflow: hidden;
         `};
@@ -70,23 +70,11 @@ const HeaderWrapper = styled.div`
     }
 `;
 
-const getTitle = (title) => {
+const getTitle = title => {
     return title !== '' ? `${title} - WebGL Study` : 'WebGL Study';
 };
 
 export default class Layout extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isMenuOpen: false,
-        };
-    }
-
-    toggleMenu = (isMenuOpen) => {
-        this.setState({ isMenuOpen: !this.state.isMenuOpen });
-    }
-
     render() {
         const { title, articles, children } = this.props;
         return (
@@ -95,11 +83,14 @@ export default class Layout extends React.Component<any, any> {
                     <title>{getTitle(title)}</title>
                     <script>{analytics}</script>
                 </Helmet>
-                <SidebarWrapper isMenuOpen={this.state.isMenuOpen}>
+                <SidebarWrapper isMenuOpen={this.props.isMenuOpen}>
                     <Sidebar articles={articles}/>
                 </SidebarWrapper>
                 <HeaderWrapper>
-                    <MobileHeader title={'WebGL Study'} isMenuOpen={this.state.isMenuOpen} toggle={this.toggleMenu}/>
+                    <MobileHeader
+                        title={'WebGL Study'}
+                        isMenuOpen={this.props.isMenuOpen}
+                        toggle={this.props.toggleMenu}/>
                 </HeaderWrapper>
                 <ContentWrapper>
                     {children}

@@ -1,7 +1,8 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { sortedUniq, flatten } from 'lodash';
+import { uniq, flatten } from 'lodash';
 import Link from './link';
 
 const Wrapper = styled.nav`
@@ -45,7 +46,8 @@ const Footer = styled.div`
 export default class Sidebar extends React.Component<any, any> {
     render() {
         const recentEntries = this.props.articles.slice(-3).reverse();
-        const categories = sortedUniq(flatten(this.props.articles.map(a => a.categories)));
+        const categories = uniq(flatten(this.props.articles.map(a => a.categories)));
+
         return (
             <Wrapper>
                 <h1><Link to="?">fand/webgl-study</Link></h1>
@@ -70,16 +72,16 @@ export default class Sidebar extends React.Component<any, any> {
 
                 <Footer>
                     <a href="https://fand.github.io/webgl-study/feed.xml" target="_blank">
-                        <i className="fa fa-rss-square" aria-hidden="true"></i>
+                        <i className="fa fa-rss-square" aria-hidden="true"/>
                     </a>
                     <a href="https://twitter.com/amagitakayosi" target="_blank">
-                        <i className="fa fa-twitter" aria-hidden="true"></i>
+                        <i className="fa fa-twitter" aria-hidden="true"/>
                     </a>
                     <a href="https://github.com/fand/webgl-study" target="_blank">
-                        <i className="fa fa-github" aria-hidden="true"></i>
+                        <i className="fa fa-github" aria-hidden="true"/>
                     </a>
                 </Footer>
             </Wrapper>
         );
     }
-};
+}

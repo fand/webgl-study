@@ -13,6 +13,11 @@ const Thumbnails = styled.div`
     position: relative;
     margin-top: -5px;
 `;
+const ThumbnailsHeader = styled.div`
+    display: block;
+    flex: 100%;
+    margin: 1%;
+`;
 const ThumbnailWrapper = styled.div`
     position: relative;
     flex: 1 0 210px;
@@ -39,6 +44,7 @@ const Dummy = (ThumbnailWrapper as any).extend`
 
 interface IThumbnailsProps {
     articles: ShaderArticle[];
+    category: string;
 }
 
 interface IThumbnailsState {
@@ -89,6 +95,9 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
     }, 100);
 
     render() {
+        const articles = this.props.articles
+            .filter(a => a.categories.some(c => !!c.match(this.props.category)))
+            .reverse();
         const dummiesNum = 5 - Math.floor(this.props.articles.length % 5);
         const dummies = (
             dummiesNum === 5 ? [] :
@@ -96,10 +105,12 @@ export default class App extends React.Component<IThumbnailsProps, IThumbnailsSt
             dummiesNum === 3 ? [1, 2, 3] :
             dummiesNum === 2 ? [1, 2] : [1]
         );
-
         return (
             <Thumbnails>
-                {this.props.articles.slice().reverse().map((a, i) =>
+                {[this.props.category].filter(x => x).map(c =>
+                    <ThumbnailsHeader key={c}><h2>Category: {c}</h2></ThumbnailsHeader>
+                )}
+                {articles.map(a =>
                     <ThumbnailWrapper key={a.id}>
                         <Thumbnail
                             thumbnail={`thumbnails/${a.id}.png`}

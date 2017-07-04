@@ -55,21 +55,24 @@ export default class Article extends React.Component<IArticleProps, {}> {
         this.three = null;
     }
 
-    componentDidMount() {
-        if (isMobile) { return; }
-
+    loadShader = article => {
         this.three = new ThreeShader(1, 1);
 
         if (this.canvas) {
             this.three.setCanvas(this.canvas);
-            this.three.loadTexture(this.props.article.texture);
-            this.three.loadShader(this.props.article.fragment);
+            this.three.loadTexture(article.texture);
+            this.three.loadShader(article.fragment);
             this.three.play();
         }
 
-        if (this.props.article.sound) {
-            this.three.loadSound(this.props.article.sound);
+        if (article.sound) {
+            this.three.loadSound(article.sound);
         }
+    }
+
+    componentDidMount() {
+        if (isMobile) { return; }
+        this.loadShader(this.props.article);
 
         if (process.env.NODE_ENV !== 'production') {
             const socket = io('http://localhost:8081');
@@ -81,8 +84,16 @@ export default class Article extends React.Component<IArticleProps, {}> {
         }
     }
 
-    componentWillUnmount() {
+    componentWillReceiveProps(nextProps) {
+        if (isMobile) { return; }
         this.three.stop();
+        this.loadShader(nextProps.article);
+    }
+
+    componentWillUnmount() {
+        if (this.three) {
+            this.three.stop();
+        }
     }
 
     setCanvas = el => this.canvas = el;
