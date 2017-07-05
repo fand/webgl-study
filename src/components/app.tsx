@@ -6,6 +6,7 @@ import Layout from './layout';
 import ArticlePage from './article-page';
 import ThumbnailsPage from './thumbnails-page';
 import ShaderArticle from '../models/shader-article';
+import jump from 'jump.js';
 
 interface IProps {
     articles: ShaderArticle[];
@@ -33,6 +34,7 @@ export default class App extends React.Component<IProps, IState> {
         this.history = createHistory();
         this.history.listen(location => {
             this.setState(this.getState);
+            jump('#app', { duration: 500 });
         });
     }
 
