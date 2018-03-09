@@ -17,7 +17,7 @@
         "object-literal-sort-keys": false,
         "one-line": false,
         "ordered-imports": false,
-        "quotemark": "singlequote",
+        "quotemark": [true, "single", "jsx-double"],
         "trailing-comma": [true, {"singleline": "ignore"}]
     },
     "rulesDirectory": []

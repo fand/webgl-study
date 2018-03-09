@@ -5,7 +5,7 @@ import { throttle } from 'lodash';
 import ThreeShader from '../models/three-shader';
 import Link from '../components/link';
 
-const ThumbnailLink = styled(Link)`
+const ThumbnailLink: any = styled(Link)`
     display: block;
     position: relative;
     background: #000;
